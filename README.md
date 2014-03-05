@@ -29,7 +29,6 @@ var dropTarget = document.querySelector('#dropTarget')
 dragDrop(dropTarget, function (files) {
   console.log('Here are the dropped files', files)
 })
-
 ```
 
 Another handy thing this does is add a `drag` class to the drop target when the user
@@ -40,9 +39,9 @@ it obvious that this is a drop target!
 
 ```js
 var dragDrop = require('drag-drop')
-var dropTarget = document.querySelector('#dropTarget')
 
-dragDrop(dropTarget, function (files) {
+// You can pass in a DOM node or a selector string!
+dragDrop('#dropTarget', function (files) {
   console.log('Here are the dropped files', files)
 
   // `files` is an Array!
@@ -63,7 +62,6 @@ dragDrop(dropTarget, function (files) {
     reader.readAsArrayBuffer(file)
   })
 })
-
 ```
 
 ## license
