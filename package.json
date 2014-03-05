@@ -1,0 +1,46 @@
+{
+  "name": "drag-drop",
+  "description": "Unfuck the HTML5 drag & drop API",
+  "version": "1.0.0",
+  "author": "Feross Aboukhadijeh <feross@feross.org> (http://feross.org/)",
+  "bugs": {
+    "url": "https://github.com/feross/drag-drop/issues"
+  },
+  "dependencies": {
+    "lodash.throttle": "^2.4.1"
+  },
+  "devDependencies": {
+    "tape": "2.x"
+  },
+  "homepage": "https://github.com/feross/drag-drop",
+  "keywords": [
+    "drag",
+    "drop",
+    "dnd",
+    "drag and drop",
+    "drag drop",
+    "html5",
+    "drag & drop",
+    "frontent",
+    "browserify"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/feross/drag-drop.git"
+  },
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "testling": {
+    "files": "test/*.js",
+    "browsers": [
+      "ie/10..latest",
+      "chrome/25..latest",
+      "firefox/20..latest",
+      "safari/6..latest",
+      "opera/15.0..latest"
+    ]
+  }
+}
