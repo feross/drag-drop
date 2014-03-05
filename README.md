@@ -6,9 +6,13 @@
 
 [![browser support](https://ci.testling.com/feross/drag-drop.png)](https://ci.testling.com/feross/drag-drop)
 
-### Unfuck the [HTML5 drag & drop API](https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications)
+### [HTML5 drag & drop API](https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications) for humans
 
-Also works in the browser with [browserify](http://browserify.org/)!
+In case you didn't know, the HTML5 drag and drop API is a
+[total disaster](http://www.quirksmode.org/blog/archives/2009/09/the_html5_drag.html)!
+This is an attempt to make the API usable by mere mortals.
+
+Works in the browser with [browserify](http://browserify.org/)!
 
 ## install
 

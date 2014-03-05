@@ -1,6 +1,6 @@
 {
   "name": "drag-drop",
-  "description": "Unfuck the HTML5 drag & drop API",
+  "description": "HTML5 drag & drop for humans",
   "version": "1.0.0",
   "author": "Feross Aboukhadijeh <feross@feross.org> (http://feross.org/)",
   "bugs": {
