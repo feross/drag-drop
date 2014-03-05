@@ -6,7 +6,7 @@
 
 [![browser support](https://ci.testling.com/feross/drag-drop.png)](https://ci.testling.com/feross/drag-drop)
 
-### [HTML5 drag & drop API](https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications) for humans
+### [HTML5 drag & drop](https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications) for humans
 
 In case you didn't know, the HTML5 drag and drop API is a
 [total disaster](http://www.quirksmode.org/blog/archives/2009/09/the_html5_drag.html)!
