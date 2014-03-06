@@ -25,8 +25,7 @@ npm install drag-drop
 ```js
 var dragDrop = require('drag-drop')
 
-var target = document.querySelector('#dropTarget')
-dragDrop(target, function (files) {
+dragDrop('#dropTarget', function (files) {
   console.log('Here are the dropped files', files)
 })
 ```
