@@ -1,8 +1,4 @@
-# drag-drop
-[![Build Status](http://img.shields.io/travis/feross/drag-drop.svg)](https://travis-ci.org/feross/drag-drop)
-[![NPM Version](http://img.shields.io/npm/v/drag-drop.svg)](https://npmjs.org/package/drag-drop)
-[![NPM](http://img.shields.io/npm/dm/drag-drop.svg)](https://npmjs.org/package/drag-drop)
-[![Gittip](http://img.shields.io/gittip/feross.svg)](https://www.gittip.com/feross/)
+# drag-drop [![travis](https://img.shields.io/travis/feross/drag-drop.svg)](https://travis-ci.org/feross/drag-drop) [![npm](https://img.shields.io/npm/v/drag-drop.svg)](https://npmjs.org/package/drag-drop) [![downloads](https://img.shields.io/npm/dm/drag-drop.svg)](https://npmjs.org/package/drag-drop) [![gittip](https://img.shields.io/gittip/feross.svg)](https://www.gittip.com/feross/)
 
 [![browser support](https://ci.testling.com/feross/drag-drop.png)](https://ci.testling.com/feross/drag-drop)
 
