@@ -37,7 +37,7 @@
   "scripts": {
     "test": "tape test/*.js",
     "prepublish": "npm run build",
-    "build": "browserify -s DragDrop -r ./buffer | uglifyjs -c warnings=false -m > dragdrop.bundle.js"
+    "build": "browserify -s DragDrop -r ./ | uglifyjs -c warnings=false -m > dragdrop.bundle.js"
   },
   "testling": {
     "files": "test/*.js",
