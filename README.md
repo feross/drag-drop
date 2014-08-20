@@ -1,22 +1,34 @@
 # drag-drop [![travis](https://img.shields.io/travis/feross/drag-drop.svg)](https://travis-ci.org/feross/drag-drop) [![npm](https://img.shields.io/npm/v/drag-drop.svg)](https://npmjs.org/package/drag-drop) [![downloads](https://img.shields.io/npm/dm/drag-drop.svg)](https://npmjs.org/package/drag-drop) [![gittip](https://img.shields.io/gittip/feross.svg)](https://www.gittip.com/feross/)
 
+### HTML5 drag & drop for humans
+
 [![browser support](https://ci.testling.com/feross/drag-drop.png)](https://ci.testling.com/feross/drag-drop)
 
-### [HTML5 drag & drop](https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications) for humans
-
-In case you didn't know, the HTML5 drag and drop API is a
+In case you didn't know, the
+[HTML5 drag and drop API](https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications)
+is a
 [total disaster](http://www.quirksmode.org/blog/archives/2009/09/the_html5_drag.html)!
 This is an attempt to make the API usable by mere mortals.
 
-Works in the browser with [browserify](http://browserify.org/)!
+This module works in the browser with [browserify](http://browserify.org/) and it's used
+by [WebTorrent](http://webtorrent.io)!
 
-## install
+**Note:** If you're not using browserify, then use the included standalone file
+`dragdrop.bundle.js`. This exports a `DragDrop` function on `window`.
+
+### features
+
+- simple API
+- adds a `drag` class to the drop target on hover, for easy styling!
+- optionally, get the file(s) as a Buffer (see [buffer](https://github.com/feross/buffer))
+
+### install
 
 ```
 npm install drag-drop
 ```
 
-## usage
+### usage
 
 ```js
 var dragDrop = require('drag-drop')
@@ -30,7 +42,7 @@ Another handy thing this does is add a `drag` class to the drop target when the 
 is dragging a file over the drop target. Useful for styling the drop target to make
 it obvious that this is a drop target!
 
-## a more complete example
+### a more complete example
 
 ```js
 var dragDrop = require('drag-drop')
@@ -41,6 +53,10 @@ dragDrop('#dropTarget', function (files) {
 
   // `files` is an Array!
   files.forEach(function (file) {
+    console.log(file.name)
+    console.log(file.size)
+    console.log(file.type)
+    console.log(file.lastModifiedData)
 
     // convert the file to a Buffer that we can use!
     var reader = new FileReader()
@@ -59,6 +75,25 @@ dragDrop('#dropTarget', function (files) {
 })
 ```
 
-## license
+### get files as buffers
+
+If you prefer to access file data as Buffers, then just require drag-drop like this:
+
+```js
+var dragDrop = require('drag-drop/buffer')
+
+dragDrop('#dropTarget', function (files) {
+  files.forEach(function (file) {
+    console.log(file.name)
+    console.log(file.size)
+    console.log(file.type)
+    console.log(file.lastModifiedDate)
+    console.log(file.buffer) // this is a Buffer!
+  })
+}
+
+```
+
+### license
 
 MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org).

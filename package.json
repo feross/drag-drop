@@ -7,10 +7,14 @@
     "url": "https://github.com/feross/drag-drop/issues"
   },
   "dependencies": {
-    "lodash.throttle": "^2.4.1"
+    "lodash.throttle": "^2.4.1",
+    "run-parallel": "^1.0.0",
+    "typedarray-to-buffer": "^1.0.3"
   },
   "devDependencies": {
-    "tape": "2.x"
+    "browserify": "^5.10.0",
+    "tape": "2.x",
+    "uglify-js": "^2.4.15"
   },
   "homepage": "https://github.com/feross/drag-drop",
   "keywords": [
@@ -31,7 +35,9 @@
     "url": "git://github.com/feross/drag-drop.git"
   },
   "scripts": {
-    "test": "tape test/*.js"
+    "test": "tape test/*.js",
+    "prepublish": "npm run build",
+    "build": "browserify -s DragDrop -r ./buffer | uglifyjs -c warnings=false -m > dragdrop.bundle.js"
   },
   "testling": {
     "files": "test/*.js",

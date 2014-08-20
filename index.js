@@ -1,6 +1,13 @@
-module.exports = addDragDropListener
+module.exports = DragDrop
 
 var throttle = require('lodash.throttle')
+
+function DragDrop (elem, cb) {
+  if (typeof elem === 'string') elem = document.querySelector(elem)
+  elem.addEventListener('dragenter', killEvent, false)
+  elem.addEventListener('dragover', makeOnDragOver(elem), false)
+  elem.addEventListener('drop', onDrop.bind(undefined, elem, cb), false)
+}
 
 function killEvent (e) {
   e.stopPropagation()
@@ -32,14 +39,4 @@ function onDrop (elem, cb, e) {
   elem.classList.remove('drag')
   cb(Array.prototype.slice.call(e.dataTransfer.files))
   return false
-}
-
-function addDragDropListener (elem, cb) {
-  if (typeof elem === 'string') {
-    elem = document.querySelector(elem)
-  }
-
-  elem.addEventListener('dragenter', killEvent, false)
-  elem.addEventListener('dragover', makeOnDragOver(elem), false)
-  elem.addEventListener('drop', onDrop.bind(undefined, elem, cb), false)
 }
