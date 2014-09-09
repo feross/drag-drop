@@ -37,6 +37,6 @@ function onDrop (elem, cb, e) {
   e.stopPropagation()
   e.preventDefault()
   elem.classList.remove('drag')
-  cb(Array.prototype.slice.call(e.dataTransfer.files))
+  cb(Array.prototype.slice.call(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
   return false
 }

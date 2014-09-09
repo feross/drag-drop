@@ -5,7 +5,7 @@ var dragDrop = require('./')
 var parallel = require('run-parallel')
 
 function DragDropAsBuffer (elem, cb) {
-  dragDrop(elem, function (files) {
+  dragDrop(elem, function (files, pos) {
     var tasks = files.map(function (file) {
       return function (cb) {
         var reader = new FileReader()
@@ -24,7 +24,7 @@ function DragDropAsBuffer (elem, cb) {
     })
     parallel(tasks, function (err, results) {
       if (err) throw err
-      cb(results)
+      cb(results, pos)
     })
   })
 }
