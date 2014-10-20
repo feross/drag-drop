@@ -7,9 +7,9 @@
     "url": "https://github.com/feross/drag-drop/issues"
   },
   "dependencies": {
+    "blob-to-buffer": "^1.0.2",
     "lodash.throttle": "^2.4.1",
-    "run-parallel": "^1.0.0",
-    "typedarray-to-buffer": "^1.0.3"
+    "run-parallel": "^1.0.0"
   },
   "devDependencies": {
     "browserify": "^5.10.0",

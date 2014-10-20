@@ -85,11 +85,16 @@ var dragDrop = require('drag-drop/buffer')
 
 dragDrop('#dropTarget', function (files) {
   files.forEach(function (file) {
+    // file is actually a buffer!
+    console.log(file.readUInt32LE(0))
+    console.log(file.toJSON())
+    console.log(file.toString('hex')) // etc...
+
+    // but it still has all the normal file properties!
     console.log(file.name)
     console.log(file.size)
     console.log(file.type)
     console.log(file.lastModifiedDate)
-    console.log(file.buffer) // this is a Buffer!
   })
 }
 
