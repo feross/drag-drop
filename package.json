@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "blob-to-buffer": "^1.0.2",
-    "lodash.throttle": "^2.4.1",
+    "lodash.throttle": "^3.0.1",
     "run-parallel": "^1.0.0"
   },
   "devDependencies": {
