@@ -1,15 +1,27 @@
-module.exports = DragDrop
+module.exports = dragDrop
 
 var throttle = require('lodash.throttle')
 
-function DragDrop (elem, cb) {
+function dragDrop (elem, cb) {
   if (typeof elem === 'string') elem = document.querySelector(elem)
-  elem.addEventListener('dragenter', killEvent, false)
-  elem.addEventListener('dragover', makeOnDragOver(elem), false)
-  elem.addEventListener('drop', onDrop.bind(undefined, elem, cb), false)
+
+  var onDragOver = makeOnDragOver(elem)
+  var onDrop = makeOnDrop(elem, cb)
+
+  elem.addEventListener('dragenter', stopEvent, false)
+  elem.addEventListener('dragover', onDragOver, false)
+  elem.addEventListener('drop', onDrop, false)
+
+  // Function to remove drag-drop listeners
+  return function remove () {
+    elem.classList.remove('drag')
+    elem.removeEventListener('dragenter', stopEvent, false)
+    elem.removeEventListener('dragover', onDragOver, false)
+    elem.removeEventListener('drop', onDrop, false)
+  }
 }
 
-function killEvent (e) {
+function stopEvent (e) {
   e.stopPropagation()
   e.preventDefault()
   return false
@@ -33,10 +45,12 @@ function makeOnDragOver (elem) {
   }
 }
 
-function onDrop (elem, cb, e) {
-  e.stopPropagation()
-  e.preventDefault()
-  elem.classList.remove('drag')
-  cb(Array.prototype.slice.call(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
-  return false
+function makeOnDrop (elem, cb) {
+  return function (e) {
+    e.stopPropagation()
+    e.preventDefault()
+    elem.classList.remove('drag')
+    cb(Array.prototype.slice.call(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
+    return false
+  }
 }

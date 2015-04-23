@@ -43,7 +43,7 @@ Another handy thing this does is add a `drag` class to the drop target when the 
 is dragging a file over the drop target. Useful for styling the drop target to make
 it obvious that this is a drop target!
 
-### a more complete example
+### complete example
 
 ```js
 var dragDrop = require('drag-drop')
@@ -97,7 +97,23 @@ dragDrop('#dropTarget', function (files) {
     console.log(file.lastModifiedDate)
   })
 }
+```
 
+### remove listeners
+
+To stop listening for drag & drop events and remove the event listeners, just use the
+`remove` function returned by the `dragDrop` function.
+
+```js
+var dragDrop = require('drag-drop')
+
+var remove = dragDrop('#dropTarget', function (files, pos) {
+  console.log('Here are the dropped files', files)
+  console.log('Dropped at coordinates', pos.x, pos.y)
+})
+
+// ... at some point in the future, stop listening for drag & drop events
+remove()
 ```
 
 ### license
