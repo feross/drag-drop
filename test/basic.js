@@ -5,7 +5,7 @@ var test = require('tape')
 
 test('requiring drag-drop does not throw', function (t) {
   t.doesNotThrow(function () {
-    var dragDrop = require('../')
+    require('../')
   })
   t.end()
 })

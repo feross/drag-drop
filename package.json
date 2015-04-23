@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "browserify": "^9.0.3",
+    "standard": "^3.7.1",
     "tape": "^4.0.0",
     "uglify-js": "^2.4.15"
   },
@@ -35,17 +36,10 @@
     "url": "git://github.com/feross/drag-drop.git"
   },
   "scripts": {
-    "test": "tape test/*.js",
+    "test": "standard && tape test/*.js",
     "build": "browserify -s DragDrop -r ./ | uglifyjs -c warnings=false -m > dragdrop.bundle.js"
   },
-  "testling": {
-    "files": "test/*.js",
-    "browsers": [
-      "ie/10..latest",
-      "chrome/25..latest",
-      "firefox/20..latest",
-      "safari/6..latest",
-      "opera/15.0..latest"
-    ]
+  "standard": {
+    "ignore": "dragdrop.bundle.js"
   }
 }
