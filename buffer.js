@@ -1,14 +1,14 @@
-module.exports = DragDropAsBuffer
+module.exports = dragDropAsBuffer
 
 var dragDrop = require('./')
 var parallel = require('run-parallel')
-var toBuffer = require('blob-to-buffer')
+var blobToBuffer = require('blob-to-buffer')
 
-function DragDropAsBuffer (elem, cb) {
+function dragDropAsBuffer (elem, cb) {
   dragDrop(elem, function (files, pos) {
     var tasks = files.map(function (file) {
       return function (cb) {
-        toBuffer(file, function (err, buffer) {
+        blobToBuffer(file, function (err, buffer) {
           if (err) return cb(err)
           buffer.name = file.name
           buffer.size = file.size
