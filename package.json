@@ -13,7 +13,7 @@
     "run-parallel": "^1.0.0"
   },
   "devDependencies": {
-    "browserify": "^9.0.3",
+    "browserify": "^10.2.1",
     "standard": "^3.7.1",
     "tape": "^4.0.0",
     "uglify-js": "^2.4.15"
