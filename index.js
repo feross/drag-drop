@@ -52,7 +52,7 @@ function makeOnDrop (elem, ondrop) {
     e.stopPropagation()
     e.preventDefault()
     elem.classList.remove('drag')
-
+    var pos = { x: e.clientX, y: e.clientY }
     if (e.dataTransfer.items) {
       // Handle directories in Chrome using the proprietary FileSystem API
       parallel(toArray(e.dataTransfer.items).map(function (item) {
@@ -61,10 +61,10 @@ function makeOnDrop (elem, ondrop) {
         }
       }), function (err, results) {
         if (err) return // there will never be an err here
-        ondrop(flatten(results))
+        ondrop(flatten(results), pos)
       })
     } else {
-      ondrop(toArray(e.dataTransfer.files), { x: e.clientX, y: e.clientY })
+      ondrop(toArray(e.dataTransfer.files), pos)
     }
 
     return false
