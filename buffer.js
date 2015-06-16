@@ -5,7 +5,7 @@ var parallel = require('run-parallel')
 var blobToBuffer = require('blob-to-buffer')
 
 function dragDropAsBuffer (elem, cb) {
-  dragDrop(elem, function (files, pos) {
+  var remove = dragDrop(elem, function (files, pos) {
     var tasks = files.map(function (file) {
       return function (cb) {
         blobToBuffer(file, function (err, buffer) {
@@ -23,4 +23,5 @@ function dragDropAsBuffer (elem, cb) {
       cb(results, pos)
     })
   })
+  return remove
 }
