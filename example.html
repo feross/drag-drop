@@ -1,7 +1,15 @@
-<script src="dragdrop.bundle.js"></script>
-
-<script>
-  window.remove = DragDrop('html', function (files) {
-    console.log(files)
-  })
-</script>
+<html>
+  <head>
+    <title>drag-drop example</title>
+  </head>
+  <body>
+    <h1>Drag something onto this page</h1>
+    <script src="dragdrop.bundle.js"></script>
+    <script>
+      window.remove = DragDrop(window, function (files) {
+        alert('got ' + files.length + ' files')
+        console.log(files)
+      })
+    </script>
+  </body>
+</html>
