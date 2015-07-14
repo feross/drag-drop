@@ -1,3 +1,5 @@
+/* global Element */
+
 module.exports = dragDrop
 
 var flatten = require('flatten')
@@ -16,7 +18,7 @@ function dragDrop (elem, ondrop) {
 
   // Function to remove drag-drop listeners
   return function remove () {
-    elem.classList.remove('drag')
+    if (elem instanceof Element) elem.classList.remove('drag')
     elem.removeEventListener('dragenter', stopEvent, false)
     elem.removeEventListener('dragover', onDragOver, false)
     elem.removeEventListener('drop', onDrop, false)
@@ -31,11 +33,11 @@ function stopEvent (e) {
 
 function makeOnDragOver (elem) {
   var fn = throttle(function () {
-    elem.classList.add('drag')
+    if (elem instanceof Element) elem.classList.add('drag')
 
     if (elem.timeout) clearTimeout(elem.timeout)
     elem.timeout = setTimeout(function () {
-      elem.classList.remove('drag')
+      if (elem instanceof Element) elem.classList.remove('drag')
     }, 150)
   }, 100, {trailing: false})
 
@@ -51,7 +53,7 @@ function makeOnDrop (elem, ondrop) {
   return function (e) {
     e.stopPropagation()
     e.preventDefault()
-    elem.classList.remove('drag')
+    if (elem instanceof Element) elem.classList.remove('drag')
     var pos = { x: e.clientX, y: e.clientY }
     if (e.dataTransfer.items) {
       // Handle directories in Chrome using the proprietary FileSystem API
