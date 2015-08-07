@@ -78,6 +78,7 @@ function processEntry (entry, cb) {
 
   if (entry.isFile) {
     entry.file(function (file) {
+      file.fullPath = entry.fullPath  // preserve pathing for consumer
       cb(null, file)
     })
   } else if (entry.isDirectory) {
