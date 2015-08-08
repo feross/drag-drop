@@ -66,7 +66,11 @@ function makeOnDrop (elem, ondrop) {
         ondrop(flatten(results), pos)
       })
     } else {
-      ondrop(toArray(e.dataTransfer.files), pos)
+      var files = toArray(e.dataTransfer.files)
+      files.forEach(function (file) {
+        file.fullPath = '/' + file.name
+      })
+      ondrop(files, pos)
     }
 
     return false
