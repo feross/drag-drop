@@ -1,5 +1,3 @@
-/* global Element */
-
 module.exports = dragDrop
 
 var flatten = require('flatten')
@@ -7,7 +5,7 @@ var parallel = require('run-parallel')
 var throttle = require('lodash.throttle')
 
 function dragDrop (elem, ondrop) {
-  if (typeof elem === 'string') elem = document.querySelector(elem)
+  if (typeof elem === 'string') elem = window.document.querySelector(elem)
 
   var onDragOver = makeOnDragOver(elem)
   var onDrop = makeOnDrop(elem, ondrop)
@@ -18,7 +16,7 @@ function dragDrop (elem, ondrop) {
 
   // Function to remove drag-drop listeners
   return function remove () {
-    if (elem instanceof Element) elem.classList.remove('drag')
+    if (elem instanceof window.Element) elem.classList.remove('drag')
     elem.removeEventListener('dragenter', stopEvent, false)
     elem.removeEventListener('dragover', onDragOver, false)
     elem.removeEventListener('drop', onDrop, false)
@@ -33,11 +31,11 @@ function stopEvent (e) {
 
 function makeOnDragOver (elem) {
   var fn = throttle(function () {
-    if (elem instanceof Element) elem.classList.add('drag')
+    if (elem instanceof window.Element) elem.classList.add('drag')
 
     if (elem.timeout) clearTimeout(elem.timeout)
     elem.timeout = setTimeout(function () {
-      if (elem instanceof Element) elem.classList.remove('drag')
+      if (elem instanceof window.Element) elem.classList.remove('drag')
     }, 150)
   }, 100, {trailing: false})
 
@@ -53,7 +51,7 @@ function makeOnDrop (elem, ondrop) {
   return function (e) {
     e.stopPropagation()
     e.preventDefault()
-    if (elem instanceof Element) elem.classList.remove('drag')
+    if (elem instanceof window.Element) elem.classList.remove('drag')
     var pos = { x: e.clientX, y: e.clientY }
     if (e.dataTransfer.items) {
       // Handle directories in Chrome using the proprietary FileSystem API
