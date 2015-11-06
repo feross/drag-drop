@@ -4,6 +4,8 @@
 
 [![browser support](https://ci.testling.com/feross/drag-drop.png)](https://ci.testling.com/feross/drag-drop)
 
+[Demo](https://3191473faad26b048f62bdd87fba6396863be32d.htmlb.in/)
+
 In case you didn't know, the
 [HTML5 drag and drop API](https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications)
 is a

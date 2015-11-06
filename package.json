@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "browserify": "^10.2.1",
+    "html-inline": "^1.2.0",
     "node-static": "^0.7.6",
     "standard": "^4.5.2",
     "tape": "^4.0.0",
@@ -28,7 +29,7 @@
     "drag drop",
     "html5",
     "drag & drop",
-    "frontent",
+    "frontend",
     "browserify"
   ],
   "license": "MIT",
@@ -38,6 +39,7 @@
     "url": "git://github.com/feross/drag-drop.git"
   },
   "scripts": {
+    "demo": "html-inline example.html | curl -sT- https://htmlb.in",
     "test": "standard && tape test/*.js",
     "example": "npm run build && static",
     "build": "browserify -s DragDrop -r ./ | uglifyjs -c warnings=false -m > dragdrop.bundle.js"
