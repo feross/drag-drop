@@ -1,8 +1,6 @@
-# drag-drop [![travis](https://img.shields.io/travis/feross/drag-drop.svg)](https://travis-ci.org/feross/drag-drop) [![npm](https://img.shields.io/npm/v/drag-drop.svg)](https://npmjs.org/package/drag-drop) [![downloads](https://img.shields.io/npm/dm/drag-drop.svg)](https://npmjs.org/package/drag-drop) [![gittip](https://img.shields.io/gittip/feross.svg)](https://www.gittip.com/feross/)
+# drag-drop [![travis](https://img.shields.io/travis/feross/drag-drop.svg)](https://travis-ci.org/feross/drag-drop) [![npm](https://img.shields.io/npm/v/drag-drop.svg)](https://npmjs.org/package/drag-drop) [![downloads](https://img.shields.io/npm/dm/drag-drop.svg)](https://npmjs.org/package/drag-drop)
 
 ### HTML5 drag & drop for humans
-
-[![browser support](https://ci.testling.com/feross/drag-drop.png)](https://ci.testling.com/feross/drag-drop)
 
 [Demo](https://3191473faad26b048f62bdd87fba6396863be32d.htmlb.in/)
 
