@@ -9,7 +9,6 @@
   "dependencies": {
     "blob-to-buffer": "^1.0.2",
     "flatten": "0.0.1",
-    "lodash.throttle": "^3.0.1",
     "run-parallel": "^1.0.0"
   },
   "devDependencies": {

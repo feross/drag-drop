@@ -1,13 +1,24 @@
 <html>
   <head>
     <title>drag-drop example</title>
+    <style>
+      body {
+        height: 100%;
+      }
+      .drag {
+        border: 5px solid red;
+      }
+    </style>
   </head>
   <body>
     <h1>Drag something onto this page</h1>
     <script src="dragdrop.bundle.js"></script>
     <script>
-      window.remove = DragDrop(window, function (files) {
-        alert('got ' + files.length + ' files')
+      window.remove = DragDrop('body', function (files) {
+        var names = files.map(function (file) { return file.name })
+
+        window.alert('got ' + files.length + ' files: ' + names.join(', '))
+        window.files = files
         console.log(files)
       })
     </script>

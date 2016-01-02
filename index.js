@@ -2,16 +2,17 @@ module.exports = dragDrop
 
 var flatten = require('flatten')
 var parallel = require('run-parallel')
-var throttle = require('lodash.throttle')
 
 function dragDrop (elem, ondrop) {
   if (typeof elem === 'string') elem = window.document.querySelector(elem)
 
   var onDragOver = makeOnDragOver(elem)
+  var onDragLeave = makeOnDragLeave(elem)
   var onDrop = makeOnDrop(elem, ondrop)
 
   elem.addEventListener('dragenter', stopEvent, false)
   elem.addEventListener('dragover', onDragOver, false)
+  elem.addEventListener('dragleave', onDragLeave, false)
   elem.addEventListener('drop', onDrop, false)
 
   // Function to remove drag-drop listeners
@@ -19,6 +20,7 @@ function dragDrop (elem, ondrop) {
     if (elem instanceof window.Element) elem.classList.remove('drag')
     elem.removeEventListener('dragenter', stopEvent, false)
     elem.removeEventListener('dragover', onDragOver, false)
+    elem.removeEventListener('dragleave', onDragLeave, false)
     elem.removeEventListener('drop', onDrop, false)
   }
 }
@@ -30,20 +32,20 @@ function stopEvent (e) {
 }
 
 function makeOnDragOver (elem) {
-  var fn = throttle(function () {
-    if (elem instanceof window.Element) elem.classList.add('drag')
-
-    if (elem.timeout) clearTimeout(elem.timeout)
-    elem.timeout = setTimeout(function () {
-      if (elem instanceof window.Element) elem.classList.remove('drag')
-    }, 150)
-  }, 100, {trailing: false})
-
   return function (e) {
     e.stopPropagation()
     e.preventDefault()
+    if (elem instanceof window.Element) elem.classList.add('drag')
     e.dataTransfer.dropEffect = 'copy'
-    fn()
+    return false
+  }
+}
+
+function makeOnDragLeave (elem) {
+  return function (e) {
+    e.stopPropagation()
+    e.preventDefault()
+    if (elem instanceof window.Element) elem.classList.remove('drag')
     return false
   }
 }
