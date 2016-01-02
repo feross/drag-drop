@@ -44,6 +44,7 @@ function makeOnDragOver (elem) {
     e.preventDefault()
     e.dataTransfer.dropEffect = 'copy'
     fn()
+    return false
   }
 }
 
