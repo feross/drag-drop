@@ -63,7 +63,7 @@ function makeOnDrop (elem, ondrop) {
           processEntry(item.webkitGetAsEntry(), cb)
         }
       }), function (err, results) {
-        if (err) return // there will never be an err here
+        if (err) throw err
         ondrop(flatten(results), pos)
       })
     } else {
@@ -85,6 +85,8 @@ function processEntry (entry, cb) {
     entry.file(function (file) {
       file.fullPath = entry.fullPath  // preserve pathing for consumer
       cb(null, file)
+    }, function (err) {
+      cb(err)
     })
   } else if (entry.isDirectory) {
     var reader = entry.createReader()
