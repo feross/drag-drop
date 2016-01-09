@@ -117,6 +117,14 @@ var remove = dragDrop('#dropTarget', function (files, pos) {
 remove()
 ```
 
+### a note about `file://` urls
+
+Don't run your app from `file://`. For security reasons, browsers do not allow you to
+run your app from `file://`.  In fact, many of the powerful storage APIs throw errors
+if you run the app locally from `file://`.
+
+Instead, start a local server and visit your site at `http://localhost:port`.
+
 ### license
 
 MIT. Copyright (c) [Feross Aboukhadijeh](http://feross.org).
