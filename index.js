@@ -63,6 +63,8 @@ function makeOnDrop (elem, ondrop) {
           processEntry(item.webkitGetAsEntry(), cb)
         }
       }), function (err, results) {
+        // There should never be an error in production code. This catches permission
+        // errors with file:// in Chrome.
         if (err) throw err
         ondrop(flatten(results), pos)
       })
