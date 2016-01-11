@@ -33,7 +33,6 @@ function stopEvent (e) {
 
 function makeOnDragOver (elem) {
   return function (e) {
-    if (e.target !== elem) return
     e.stopPropagation()
     e.preventDefault()
     if (elem instanceof window.Element) elem.classList.add('drag')
