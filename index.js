@@ -59,7 +59,11 @@ function makeOnDrop (elem, ondrop) {
     var pos = { x: e.clientX, y: e.clientY }
     if (e.dataTransfer.items) {
       // Handle directories in Chrome using the proprietary FileSystem API
-      parallel(toArray(e.dataTransfer.items).map(function (item) {
+      var items = toArray(e.dataTransfer.items).filter(function (item) {
+        return item.kind === 'file'
+      })
+      if (items.length === 0) return
+      parallel(items.map(function (item) {
         return function (cb) {
           processEntry(item.webkitGetAsEntry(), cb)
         }
@@ -71,6 +75,7 @@ function makeOnDrop (elem, ondrop) {
       })
     } else {
       var files = toArray(e.dataTransfer.files)
+      if (files.length === 0) return
       files.forEach(function (file) {
         file.fullPath = '/' + file.name
       })
