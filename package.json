@@ -41,9 +41,6 @@
     "demo": "html-inline example.html | curl -sT- https://htmlb.in",
     "test": "standard && tape test/*.js",
     "example": "npm run build && static",
-    "build": "browserify -s DragDrop -r ./ | uglifyjs -c warnings=false -m > dragdrop.bundle.js"
-  },
-  "standard": {
-    "ignore": "dragdrop.bundle.js"
+    "build": "browserify -s DragDrop -r ./ | uglifyjs -c warnings=false -m > dragdrop.min.js"
   }
 }
