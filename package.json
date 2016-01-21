@@ -12,7 +12,7 @@
     "run-parallel": "^1.0.0"
   },
   "devDependencies": {
-    "browserify": "^10.2.1",
+    "browserify": "^13.0.0",
     "html-inline": "^1.2.0",
     "node-static": "^0.7.6",
     "standard": "^4.5.2",
