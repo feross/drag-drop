@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "blob-to-buffer": "^1.0.2",
-    "flatten": "0.0.1",
+    "flatten": "^1.0.2",
     "run-parallel": "^1.0.0"
   },
   "devDependencies": {
