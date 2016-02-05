@@ -3,12 +3,13 @@ module.exports = dragDrop
 var flatten = require('flatten')
 var parallel = require('run-parallel')
 
-function dragDrop (elem, ondrop) {
+function dragDrop (elem, ondrop, opt) {
   if (typeof elem === 'string') elem = window.document.querySelector(elem)
+  opt = opt || {}
 
-  var onDragOver = makeOnDragOver(elem)
-  var onDragLeave = makeOnDragLeave(elem)
-  var onDrop = makeOnDrop(elem, ondrop)
+  var onDragOver = makeOnDragOver(elem, opt.onDragOver)
+  var onDragLeave = makeOnDragLeave(elem, opt.onDragLeave)
+  var onDrop = makeOnDrop(elem, ondrop, opt.onDragLeave)
 
   elem.addEventListener('dragenter', stopEvent, false)
   elem.addEventListener('dragover', onDragOver, false)
@@ -31,30 +32,33 @@ function stopEvent (e) {
   return false
 }
 
-function makeOnDragOver (elem) {
+function makeOnDragOver (elem, ondragover) {
   return function (e) {
     e.stopPropagation()
     e.preventDefault()
+    if (ondragover) ondragover()
     if (elem instanceof window.Element) elem.classList.add('drag')
     e.dataTransfer.dropEffect = 'copy'
     return false
   }
 }
 
-function makeOnDragLeave (elem) {
+function makeOnDragLeave (elem, ondragleave) {
   return function (e) {
     if (e.target !== elem) return
     e.stopPropagation()
     e.preventDefault()
+    if (ondragleave) ondragleave()
     if (elem instanceof window.Element) elem.classList.remove('drag')
     return false
   }
 }
 
-function makeOnDrop (elem, ondrop) {
+function makeOnDrop (elem, ondrop, ondragleave) {
   return function (e) {
     e.stopPropagation()
     e.preventDefault()
+    if (ondragleave) ondragleave()
     if (elem instanceof window.Element) elem.classList.remove('drag')
     var pos = { x: e.clientX, y: e.clientY }
     if (e.dataTransfer.items) {
