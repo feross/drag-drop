@@ -3,13 +3,13 @@ module.exports = dragDrop
 var flatten = require('flatten')
 var parallel = require('run-parallel')
 
-function dragDrop (elem, ondrop, opt) {
+function dragDrop (elem, listeners) {
   if (typeof elem === 'string') elem = window.document.querySelector(elem)
-  opt = opt || {}
+  if (typeof listeners === 'function') listeners = { onDrop: listeners }
 
-  var onDragOver = makeOnDragOver(elem, opt.onDragOver)
-  var onDragLeave = makeOnDragLeave(elem, opt.onDragLeave)
-  var onDrop = makeOnDrop(elem, ondrop, opt.onDragLeave)
+  var onDragOver = makeOnDragOver(elem, listeners.onDragOver)
+  var onDragLeave = makeOnDragLeave(elem, listeners.onDragLeave)
+  var onDrop = makeOnDrop(elem, listeners.onDrop, listeners.onDragLeave)
 
   elem.addEventListener('dragenter', stopEvent, false)
   elem.addEventListener('dragover', onDragOver, false)

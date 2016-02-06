@@ -117,6 +117,24 @@ var remove = dragDrop('#dropTarget', function (files, pos) {
 remove()
 ```
 
+### detect `dragover` and `dragleave` events
+
+Instead of passing just an `ondrop` function as the second argument, instead pass an
+object with all the events you want to listen for:
+
+```js
+var dragDrop = require('drag-drop')
+
+dragDrop('#dropTarget', {
+  onDrop: function (files, pos) {
+    console.log('Here are the dropped files', files)
+    console.log('Dropped at coordinates', pos.x, pos.y)
+  },
+  onDragOver: function () {},
+  onDragLeave: function () {}
+})
+```
+
 ### a note about `file://` urls
 
 Don't run your app from `file://`. For security reasons, browsers do not allow you to
