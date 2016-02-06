@@ -43,7 +43,11 @@ function makeOnDragOver (elem) {
 
 function makeOnDragLeave (elem) {
   return function (e) {
-    if (e.target !== elem) return
+    if (e.target !== elem) {
+      var parent = e.target
+      while (parent !== elem) parent = parent.parentNode
+      if (!parent) return
+    }
     e.stopPropagation()
     e.preventDefault()
     if (elem instanceof window.Element) elem.classList.remove('drag')
