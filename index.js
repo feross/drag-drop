@@ -52,7 +52,7 @@ function makeOnDragLeave (elem, ondragleave) {
     }
     e.stopPropagation()
     e.preventDefault()
-    if (ondragleave) ondragleave()
+    if (ondragleave) ondragleave(e)
     if (elem instanceof window.Element) elem.classList.remove('drag')
     return false
   }
@@ -62,7 +62,7 @@ function makeOnDrop (elem, ondrop, ondragleave) {
   return function (e) {
     e.stopPropagation()
     e.preventDefault()
-    if (ondragleave) ondragleave()
+    if (ondragleave) ondragleave(e)
     if (elem instanceof window.Element) elem.classList.remove('drag')
     var pos = { x: e.clientX, y: e.clientY }
     if (e.dataTransfer.items) {
