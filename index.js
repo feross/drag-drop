@@ -36,9 +36,9 @@ function makeOnDragOver (elem, ondragover) {
   return function (e) {
     e.stopPropagation()
     e.preventDefault()
-    if (ondragover) ondragover()
     if (elem instanceof window.Element) elem.classList.add('drag')
     e.dataTransfer.dropEffect = 'copy'
+    if (ondragover) ondragover(e)
     return false
   }
 }
