@@ -36,6 +36,14 @@ function makeOnDragOver (elem, ondragover) {
   return function (e) {
     e.stopPropagation()
     e.preventDefault()
+    if (e.dataTransfer.items) {
+      // Only add "drag" class when `items` contains a file
+      var items = toArray(e.dataTransfer.items).filter(function (item) {
+        return item.kind === 'file'
+      })
+      if (items.length === 0) return
+    }
+
     if (elem instanceof window.Element) elem.classList.add('drag')
     e.dataTransfer.dropEffect = 'copy'
     if (ondragover) ondragover(e)
