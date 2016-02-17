@@ -45,11 +45,7 @@ function makeOnDragOver (elem, ondragover) {
 
 function makeOnDragLeave (elem, ondragleave) {
   return function (e) {
-    if (e.target !== elem) {
-      var parent = e.target
-      while (parent !== elem) parent = parent.parentNode
-      if (!parent) return
-    }
+    if (e.target !== elem) return
     e.stopPropagation()
     e.preventDefault()
     if (ondragleave) ondragleave(e)
