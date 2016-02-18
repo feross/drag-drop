@@ -14,7 +14,7 @@ This module works in the browser with [browserify](http://browserify.org/) and i
 by [WebTorrent](http://webtorrent.io)!
 
 **Note:** If you're not using browserify, then use the included standalone file
-`dragdrop.bundle.js`. This exports a `DragDrop` function on `window`.
+`dragdrop.min.js`. This exports a `DragDrop` function on `window`.
 
 ### features
 
