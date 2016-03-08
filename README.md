@@ -2,19 +2,20 @@
 
 ### HTML5 drag & drop for humans
 
-[Demo](https://3191473faad26b048f62bdd87fba6396863be32d.htmlb.in/)
-
 In case you didn't know, the
 [HTML5 drag and drop API](https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications)
 is a
 [total disaster](http://www.quirksmode.org/blog/archives/2009/09/the_html5_drag.html)!
 This is an attempt to make the API usable by mere mortals.
 
-This module works in the browser with [browserify](http://browserify.org/) and it's used
-by [WebTorrent](http://webtorrent.io)!
+This module works in the browser with [browserify](http://browserify.org/).
 
-**Note:** If you're not using browserify, then use the included standalone file
+**Note:** If you do not use browserify, use the included standalone file
 `dragdrop.min.js`. This exports a `DragDrop` function on `window`.
+
+### live demo
+
+See [https://instant.io](https://instant.io).
 
 ### features
 
