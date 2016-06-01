@@ -32,11 +32,21 @@ function dragDrop (elem, listeners) {
     e.stopPropagation()
     e.preventDefault()
     if (e.dataTransfer.items) {
+      var items = toArray(e.dataTransfer.items)
+
       // Only add "drag" class when `items` contains a file
-      var items = toArray(e.dataTransfer.items).filter(function (item) {
+      var fileItems = items.filter(function (item) {
         return item.kind === 'file'
       })
-      if (items.length === 0) return
+
+      // Otherwise add "drag" class if `onDropText` event is present and `items` contains a string
+      if (fileItems.length === 0 && !listeners.onDropText) return
+
+      var stringItem = items.find(function (item) {
+        return item.kind === 'string' && item.type === 'text/plain'
+      })
+
+      if (!stringItem) return
     }
 
     elem.classList.add('drag')
@@ -81,25 +91,36 @@ function dragDrop (elem, listeners) {
     }
 
     if (e.dataTransfer.items) {
+      var items = toArray(e.dataTransfer.items)
+
       // Handle directories in Chrome using the proprietary FileSystem API
-      var items = toArray(e.dataTransfer.items).filter(function (item) {
+      var fileItems = items.filter(function (item) {
         return item.kind === 'file'
       })
 
-      if (items.length === 0) return
+      if (fileItems.length !== 0) {
+        parallel(fileItems.map(function (item) {
+          return function (cb) {
+            processEntry(item.webkitGetAsEntry(), cb)
+          }
+        }), function (err, results) {
+          // This catches permission errors with file:// in Chrome. This should never
+          // throw in production code, so the user does not need to use try-catch.
+          if (err) throw err
+          if (listeners.onDrop) {
+            listeners.onDrop(flatten(results), pos)
+          }
+        })
+      } else if (listeners.onDropText) {
+        // Handle text drop if `onDropText` event is present
+        var stringItem = items.find(function (item) {
+          return item.kind === 'string' && item.type === 'text/plain'
+        })
 
-      parallel(items.map(function (item) {
-        return function (cb) {
-          processEntry(item.webkitGetAsEntry(), cb)
+        if (stringItem) {
+          stringItem.getAsString(function (text) { listeners.onDropText(text, pos) })
         }
-      }), function (err, results) {
-        // This catches permission errors with file:// in Chrome. This should never
-        // throw in production code, so the user does not need to use try-catch.
-        if (err) throw err
-        if (listeners.onDrop) {
-          listeners.onDrop(flatten(results), pos)
-        }
-      })
+      }
     } else {
       var files = toArray(e.dataTransfer.files)
 
