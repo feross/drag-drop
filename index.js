@@ -80,6 +80,17 @@ function dragDrop (elem, listeners) {
       y: e.clientY
     }
 
+    // drop text support
+    var text = e.dataTransfer.getData("text")
+    if (text) {
+      if (listeners.onDrop) {
+        listeners.onDrop([text], pos)
+      } 
+
+      return false
+    }
+
+    // file drop support
     if (e.dataTransfer.items) {
       // Handle directories in Chrome using the proprietary FileSystem API
       var items = toArray(e.dataTransfer.items).filter(function (item) {
