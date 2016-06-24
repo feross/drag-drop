@@ -81,11 +81,11 @@ function dragDrop (elem, listeners) {
     }
 
     // drop text support
-    var text = e.dataTransfer.getData("text")
+    var text = e.dataTransfer.getData('text')
     if (text) {
       if (listeners.onDrop) {
         listeners.onDrop([text], pos)
-      } 
+      }
 
       return false
     }
