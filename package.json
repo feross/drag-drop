@@ -13,8 +13,8 @@
   },
   "devDependencies": {
     "browserify": "^13.0.0",
+    "ecstatic": "^1.4.1",
     "html-inline": "^1.2.0",
-    "node-static": "^0.7.6",
     "standard": "^7.0.0",
     "tape": "^4.0.0",
     "uglify-js": "^2.4.15"
@@ -40,7 +40,7 @@
   "scripts": {
     "demo": "html-inline example.html | curl -sT- https://htmlb.in",
     "test": "standard && tape test/*.js",
-    "example": "npm run build && static",
+    "example": "npm run build && ecstatic",
     "build": "browserify -s DragDrop -r ./ | uglifyjs -c warnings=false -m > dragdrop.min.js"
   }
 }
