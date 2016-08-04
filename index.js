@@ -31,8 +31,9 @@ function dragDrop (elem, listeners) {
   function onDragOver (e) {
     e.stopPropagation()
     e.preventDefault()
-    if (e.dataTransfer.items) {
-      // Only add "drag" class when `items` contains a file
+    if (e.dataTransfer.items && !listeners.onDropText) {
+      // If there's no onDragText handler, then only add "drag" class when `items`
+      // contains a file
       var items = toArray(e.dataTransfer.items).filter(function (item) {
         return item.kind === 'file'
       })
@@ -80,14 +81,12 @@ function dragDrop (elem, listeners) {
       y: e.clientY
     }
 
-    // drop text support
+    // text drop support
     var text = e.dataTransfer.getData('text')
     if (text) {
-      if (listeners.onDrop) {
-        listeners.onDrop([text], pos)
+      if (listeners.onDropText) {
+        listeners.onDropText(text, pos)
       }
-
-      return false
     }
 
     // file drop support

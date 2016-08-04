@@ -136,6 +136,22 @@ dragDrop('#dropTarget', {
 })
 ```
 
+### detect drag-and-dropped text
+
+If the user highlights text and drags it, we capture that as a separate event.
+Listen for it like this:
+
+```js
+var dragDrop = require('drag-drop')
+
+dragDrop('#dropTarget', {
+  onDropText: function (text, pos) {
+    console.log('Here is the dropped text', text)
+    console.log('Dropped at coordinates', pos.x, pos.y)
+  }
+})
+```
+
 ### a note about `file://` urls
 
 Don't run your app from `file://`. For security reasons, browsers do not allow you to
