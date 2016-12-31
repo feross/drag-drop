@@ -118,7 +118,7 @@ var remove = dragDrop('#dropTarget', function (files, pos) {
 remove()
 ```
 
-### detect `dragover` and `dragleave` events
+### detect `dragenter`, `dragover` and `dragleave` events
 
 Instead of passing just an `ondrop` function as the second argument, instead pass an
 object with all the events you want to listen for:
@@ -131,6 +131,7 @@ dragDrop('#dropTarget', {
     console.log('Here are the dropped files', files)
     console.log('Dropped at coordinates', pos.x, pos.y)
   },
+  onDragEnter: function () {},
   onDragOver: function () {},
   onDragLeave: function () {}
 })

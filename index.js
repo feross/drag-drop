@@ -14,7 +14,7 @@ function dragDrop (elem, listeners) {
 
   var timeout
 
-  elem.addEventListener('dragenter', stopEvent, false)
+  elem.addEventListener('dragenter', onDragEnter, false)
   elem.addEventListener('dragover', onDragOver, false)
   elem.addEventListener('dragleave', onDragLeave, false)
   elem.addEventListener('drop', onDrop, false)
@@ -22,10 +22,21 @@ function dragDrop (elem, listeners) {
   // Function to remove drag-drop listeners
   return function remove () {
     removeDragClass()
-    elem.removeEventListener('dragenter', stopEvent, false)
+    elem.removeEventListener('dragenter', onDragEnter, false)
     elem.removeEventListener('dragover', onDragOver, false)
     elem.removeEventListener('dragleave', onDragLeave, false)
     elem.removeEventListener('drop', onDrop, false)
+  }
+
+  function onDragEnter (e) {
+    if (listeners.onDragEnter) {
+      listeners.onDragEnter(e)
+    }
+
+    // Prevent event
+    e.stopPropagation()
+    e.preventDefault()
+    return false
   }
 
   function onDragOver (e) {
@@ -131,12 +142,6 @@ function dragDrop (elem, listeners) {
   function removeDragClass () {
     elem.classList.remove('drag')
   }
-}
-
-function stopEvent (e) {
-  e.stopPropagation()
-  e.preventDefault()
-  return false
 }
 
 function processEntry (entry, cb) {
