@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "browserify": "^13.0.0",
-    "ecstatic": "^1.4.1",
+    "ecstatic": "^2.1.0",
     "html-inline": "^1.2.0",
     "standard": "*",
     "tape": "^4.0.0",
