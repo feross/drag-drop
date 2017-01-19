@@ -5,7 +5,15 @@ var parallel = require('run-parallel')
 
 function dragDrop (elem, listeners) {
   if (typeof elem === 'string') {
+    var selector = elem
     elem = window.document.querySelector(elem)
+    if (!elem) {
+      throw new Error('"' + selector + '" does not match any HTML elements')
+    }
+  }
+
+  if (!elem) {
+    throw new Error('"' + elem + '" is not a valid HTML element')
   }
 
   if (typeof listeners === 'function') {
