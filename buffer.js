@@ -11,6 +11,7 @@ function dragDropAsBuffer (elem, cb) {
         blobToBuffer(file, function (err, buffer) {
           if (err) return cb(err)
           buffer.name = file.name
+          buffer.fullPath = file.fullPath
           buffer.size = file.size
           buffer.type = file.type
           buffer.lastModifiedDate = file.lastModifiedDate
