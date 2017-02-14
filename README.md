@@ -59,7 +59,8 @@ dragDrop('#dropTarget', function (files) {
     console.log(file.size)
     console.log(file.type)
     console.log(file.lastModifiedData)
-    console.log(file.fullPath)
+    console.log(file.fullPath) // not real full path due to browser security restrictions
+    console.log(file.path) // in Electron, this contains the actual full path
 
     // convert the file to a Buffer that we can use!
     var reader = new FileReader()
