@@ -1,4 +1,13 @@
-# drag-drop [![travis](https://img.shields.io/travis/feross/drag-drop/master.svg)](https://travis-ci.org/feross/drag-drop) [![npm](https://img.shields.io/npm/v/drag-drop.svg)](https://npmjs.org/package/drag-drop) [![downloads](https://img.shields.io/npm/dm/drag-drop.svg)](https://npmjs.org/package/drag-drop)
+# drag-drop [![travis][travis-image]][travis-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url] [![javascript style guide][standard-image]][standard-url]
+
+[travis-image]: https://img.shields.io/travis/feross/drag-drop/master.svg
+[travis-url]: https://travis-ci.org/feross/drag-drop
+[npm-image]: https://img.shields.io/npm/v/drag-drop.svg
+[npm-url]: https://npmjs.org/package/drag-drop
+[downloads-image]: https://img.shields.io/npm/dm/drag-drop.svg
+[downloads-url]: https://npmjs.org/package/drag-drop
+[standard-image]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
+[standard-url]: https://standardjs.com
 
 ### HTML5 drag & drop for humans
 
