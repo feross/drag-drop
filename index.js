@@ -157,7 +157,7 @@ function processEntry (entry, cb) {
 
   if (entry.isFile) {
     entry.file(function (file) {
-      file.fullPath = entry.fullPath  // preserve pathing for consumer
+      file.fullPath = entry.fullPath // preserve pathing for consumer
       cb(null, file)
     }, function (err) {
       cb(err)
