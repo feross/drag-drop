@@ -12,12 +12,12 @@
     "run-parallel": "^1.0.0"
   },
   "devDependencies": {
-    "browserify": "^14.0.0",
-    "ecstatic": "^2.1.0",
+    "browserify": "^16.1.0",
+    "ecstatic": "^3.2.0",
     "html-inline": "^1.2.0",
     "standard": "*",
     "tape": "^4.0.0",
-    "uglify-js": "^2.4.15"
+    "uglify-js": "^3.3.12"
   },
   "homepage": "https://github.com/feross/drag-drop",
   "keywords": [
