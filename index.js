@@ -110,7 +110,19 @@ function dragDrop (elem, listeners) {
     }
 
     // file drop support
-    if (e.dataTransfer.items) {
+    if (e.dataTransfer.files) {
+      var files = e.dataTransfer.files
+
+      if (files.length === 0) return
+
+      for (var i = 0; i < files.length; ++i) {
+        files[i].fullPath = '/' + files[i].name
+      }
+
+      if (listeners.onDrop) {
+        listeners.onDrop(files, pos)
+      }
+    } else if (e.dataTransfer.items) {
       // Handle directories in Chrome using the proprietary FileSystem API
       var items = toArray(e.dataTransfer.items).filter(function (item) {
         return item.kind === 'file'
@@ -130,18 +142,6 @@ function dragDrop (elem, listeners) {
           listeners.onDrop(flatten(results), pos)
         }
       })
-    } else {
-      var files = toArray(e.dataTransfer.files)
-
-      if (files.length === 0) return
-
-      files.forEach(function (file) {
-        file.fullPath = '/' + file.name
-      })
-
-      if (listeners.onDrop) {
-        listeners.onDrop(files, pos)
-      }
     }
 
     return false
