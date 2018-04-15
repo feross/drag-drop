@@ -31,6 +31,7 @@ See [https://instant.io](https://instant.io).
 - simple API
 - adds a `drag` class to the drop target on hover, for easy styling!
 - optionally, get the file(s) as a Buffer (see [buffer](https://github.com/feross/buffer))
+- supports modern browsers (Chrome, Firefox, Safari, Edge)
 
 ### install
 
@@ -44,7 +45,7 @@ npm install drag-drop
 var dragDrop = require('drag-drop')
 
 dragDrop('#dropTarget', function (files, pos) {
-  console.log('Here are the dropped files', files)
+  console.log('Here is the dropped FileList', files)
   console.log('Dropped at coordinates', pos.x, pos.y)
 })
 ```
@@ -60,9 +61,11 @@ var dragDrop = require('drag-drop')
 
 // You can pass in a DOM node or a selector string!
 dragDrop('#dropTarget', function (files) {
-  console.log('Here are the dropped files', files)
+  console.log('Here is the dropped FileList', files)
 
-  // `files` is an Array!
+  // `files` is a FileList, so convert it to an Array!
+  files = Array.from(files)
+
   files.forEach(function (file) {
     console.log(file.name)
     console.log(file.size)
@@ -96,6 +99,7 @@ If you prefer to access file data as Buffers, then just require drag-drop like t
 var dragDrop = require('drag-drop/buffer')
 
 dragDrop('#dropTarget', function (files) {
+  files = Array.from(files)
   files.forEach(function (file) {
     // file is actually a buffer!
     console.log(file.readUInt32LE(0))
@@ -120,7 +124,7 @@ To stop listening for drag & drop events and remove the event listeners, just us
 var dragDrop = require('drag-drop')
 
 var remove = dragDrop('#dropTarget', function (files, pos) {
-  console.log('Here are the dropped files', files)
+  console.log('Here is the dropped FileList', files)
   console.log('Dropped at coordinates', pos.x, pos.y)
 })
 
@@ -138,7 +142,7 @@ var dragDrop = require('drag-drop')
 
 dragDrop('#dropTarget', {
   onDrop: function (files, pos) {
-    console.log('Here are the dropped files', files)
+    console.log('Here is the dropped FileList', files)
     console.log('Dropped at coordinates', pos.x, pos.y)
   },
   onDragEnter: function () {},
