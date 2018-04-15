@@ -1,8 +1,5 @@
 module.exports = dragDrop
 
-var flatten = require('flatten')
-var parallel = require('run-parallel')
-
 function dragDrop (elem, listeners) {
   if (typeof elem === 'string') {
     var selector = elem
@@ -53,7 +50,7 @@ function dragDrop (elem, listeners) {
     if (e.dataTransfer.items) {
       // Only add "drag" class when `items` contains items that are able to be
       // handled by the registered listeners (files vs. text)
-      var items = toArray(e.dataTransfer.items)
+      var items = Array.from(e.dataTransfer.items)
       var fileItems = items.filter(function (item) { return item.kind === 'file' })
       var textItems = items.filter(function (item) { return item.kind === 'string' })
 
@@ -121,27 +118,6 @@ function dragDrop (elem, listeners) {
       if (listeners.onDrop && files.length > 0) {
         listeners.onDrop(files, pos)
       }
-    } else if (e.dataTransfer.items) {
-      console.log('e.dataTransfer.items')
-      // Handle directories in Chrome using the proprietary FileSystem API
-      var items = toArray(e.dataTransfer.items).filter(function (item) {
-        return item.kind === 'file'
-      })
-
-      if (items.length === 0) return
-
-      parallel(items.map(function (item) {
-        return function (cb) {
-          processEntry(item.webkitGetAsEntry(), cb)
-        }
-      }), function (err, results) {
-        // This catches permission errors with file:// in Chrome. This should never
-        // throw in production code, so the user does not need to use try-catch.
-        if (err) throw err
-        if (listeners.onDrop) {
-          listeners.onDrop(flatten(results), pos)
-        }
-      })
     }
 
     return false
@@ -150,43 +126,4 @@ function dragDrop (elem, listeners) {
   function removeDragClass () {
     elem.classList.remove('drag')
   }
-}
-
-function processEntry (entry, cb) {
-  var entries = []
-
-  if (entry.isFile) {
-    entry.file(function (file) {
-      file.fullPath = entry.fullPath // preserve pathing for consumer
-      cb(null, file)
-    }, function (err) {
-      cb(err)
-    })
-  } else if (entry.isDirectory) {
-    var reader = entry.createReader()
-    readEntries()
-  }
-
-  function readEntries () {
-    reader.readEntries(function (entries_) {
-      if (entries_.length > 0) {
-        entries = entries.concat(toArray(entries_))
-        readEntries() // continue reading entries until `readEntries` returns no more
-      } else {
-        doneEntries()
-      }
-    })
-  }
-
-  function doneEntries () {
-    parallel(entries.map(function (entry) {
-      return function (cb) {
-        processEntry(entry, cb)
-      }
-    }), cb)
-  }
-}
-
-function toArray (list) {
-  return Array.prototype.slice.call(list || [], 0)
 }
