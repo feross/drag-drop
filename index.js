@@ -112,6 +112,7 @@ function dragDrop (elem, listeners) {
     // File drop support. The `dataTransfer.items` API supports directories, so we
     // use it instead of `dataTransfer.files`, even though it's much more
     // complicated to use.
+    // See: https://github.com/feross/drag-drop/issues/39
     if (listeners.onDrop && e.dataTransfer.items) {
       var fileList = e.dataTransfer.files
 

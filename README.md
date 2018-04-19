@@ -46,7 +46,7 @@ npm install drag-drop
 var dragDrop = require('drag-drop')
 
 dragDrop('#dropTarget', function (files, pos, fileList) {
-  console.log('Here are the dropped files', files)
+  console.log('Here are the dropped files', files) // Array of File objects
   console.log('Dropped at coordinates', pos.x, pos.y)
   console.log('Here is the raw FileList object if you need it:', fileList)
 })
