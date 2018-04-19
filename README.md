@@ -43,9 +43,10 @@ npm install drag-drop
 ```js
 var dragDrop = require('drag-drop')
 
-dragDrop('#dropTarget', function (files, pos) {
+dragDrop('#dropTarget', function (files, pos, fileList) {
   console.log('Here are the dropped files', files)
   console.log('Dropped at coordinates', pos.x, pos.y)
+  console.log('Here is the raw FileList object if you need it:', fileList)
 })
 ```
 
@@ -59,8 +60,10 @@ it obvious that this is a drop target!
 var dragDrop = require('drag-drop')
 
 // You can pass in a DOM node or a selector string!
-dragDrop('#dropTarget', function (files) {
+dragDrop('#dropTarget', function (files, pos, fileList) {
   console.log('Here are the dropped files', files)
+  console.log('Dropped at coordinates', pos.x, pos.y)
+  console.log('Here is the raw FileList object if you need it:', fileList)
 
   // `files` is an Array!
   files.forEach(function (file) {
@@ -119,9 +122,8 @@ To stop listening for drag & drop events and remove the event listeners, just us
 ```js
 var dragDrop = require('drag-drop')
 
-var remove = dragDrop('#dropTarget', function (files, pos) {
-  console.log('Here are the dropped files', files)
-  console.log('Dropped at coordinates', pos.x, pos.y)
+var remove = dragDrop('#dropTarget', function (files) {
+  // ...
 })
 
 // ... at some point in the future, stop listening for drag & drop events
@@ -137,9 +139,10 @@ object with all the events you want to listen for:
 var dragDrop = require('drag-drop')
 
 dragDrop('#dropTarget', {
-  onDrop: function (files, pos) {
+  onDrop: function (files, pos, fileList) {
     console.log('Here are the dropped files', files)
     console.log('Dropped at coordinates', pos.x, pos.y)
+    console.log('Here is the raw FileList object if you need it:', fileList)
   },
   onDragEnter: function () {},
   onDragOver: function () {},
@@ -156,9 +159,10 @@ Listen for it like this:
 var dragDrop = require('drag-drop')
 
 dragDrop('#dropTarget', {
-  onDropText: function (text, pos) {
-    console.log('Here is the dropped text', text)
+  onDropText: function (text, pos, fileList) {
+    console.log('Here are the dropped files', files)
     console.log('Dropped at coordinates', pos.x, pos.y)
+    console.log('Here is the raw FileList object if you need it:', fileList)
   }
 })
 ```

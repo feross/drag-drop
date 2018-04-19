@@ -109,22 +109,12 @@ function dragDrop (elem, listeners) {
       listeners.onDropText(text, pos)
     }
 
-    // file drop support
-    if (e.dataTransfer.files) {
-      console.log('e.dataTransfer.files')
-      var files = toArray(e.dataTransfer.files)
+    // File drop support. The `dataTransfer.items` API supports directories, so we
+    // use it instead of `dataTransfer.files`, even though it's much more
+    // complicated to use.
+    if (listeners.onDrop && e.dataTransfer.items) {
+      var fileList = e.dataTransfer.files
 
-      if (files.length === 0) return
-
-      files.forEach(function (file) {
-        file.fullPath = '/' + file.name
-      })
-
-      if (listeners.onDrop) {
-        listeners.onDrop(files, pos)
-      }
-    } else if (e.dataTransfer.items) {
-      console.log('e.dataTransfer.items')
       // Handle directories in Chrome using the proprietary FileSystem API
       var items = Array.from(e.dataTransfer.items).filter(function (item) {
         return item.kind === 'file'
@@ -140,9 +130,7 @@ function dragDrop (elem, listeners) {
         // This catches permission errors with file:// in Chrome. This should never
         // throw in production code, so the user does not need to use try-catch.
         if (err) throw err
-        if (listeners.onDrop) {
-          listeners.onDrop(flatten(results), pos)
-        }
+        listeners.onDrop(flatten(results), pos, fileList)
       })
     }
 
