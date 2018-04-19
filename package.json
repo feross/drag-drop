@@ -7,7 +7,9 @@
     "url": "https://github.com/feross/drag-drop/issues"
   },
   "dependencies": {
-    "blob-to-buffer": "^1.0.2"
+    "blob-to-buffer": "^1.0.2",
+    "flatten": "^1.0.2",
+    "run-parallel": "^1.0.0"
   },
   "devDependencies": {
     "browserify": "^16.1.0",
