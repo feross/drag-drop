@@ -111,14 +111,16 @@ function dragDrop (elem, listeners) {
 
     // file drop support
     if (e.dataTransfer.files) {
-      var files = e.dataTransfer.files
+      console.log('e.dataTransfer.files')
+      var files = toArray(e.dataTransfer.files)
 
-      for (var i = 0; i < files.length; ++i) {
-        var file = files[i]
+      if (files.length === 0) return
+
+      files.forEach(function (file) {
         file.fullPath = '/' + file.name
-      }
+      })
 
-      if (listeners.onDrop && files.length > 0) {
+      if (listeners.onDrop) {
         listeners.onDrop(files, pos)
       }
     } else if (e.dataTransfer.items) {
