@@ -29,6 +29,8 @@ See [https://instant.io](https://instant.io).
 ### features
 
 - simple API
+- supports files and directories
+- supports modern browsers (Chrome, Firefox, Safari, Edge)
 - adds a `drag` class to the drop target on hover, for easy styling!
 - optionally, get the file(s) as a Buffer (see [buffer](https://github.com/feross/buffer))
 
