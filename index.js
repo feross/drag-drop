@@ -53,7 +53,7 @@ function dragDrop (elem, listeners) {
     if (e.dataTransfer.items) {
       // Only add "drag" class when `items` contains items that are able to be
       // handled by the registered listeners (files vs. text)
-      var items = toArray(e.dataTransfer.items)
+      var items = Array.from(e.dataTransfer.items)
       var fileItems = items.filter(function (item) { return item.kind === 'file' })
       var textItems = items.filter(function (item) { return item.kind === 'string' })
 
@@ -126,7 +126,7 @@ function dragDrop (elem, listeners) {
     } else if (e.dataTransfer.items) {
       console.log('e.dataTransfer.items')
       // Handle directories in Chrome using the proprietary FileSystem API
-      var items = toArray(e.dataTransfer.items).filter(function (item) {
+      var items = Array.from(e.dataTransfer.items).filter(function (item) {
         return item.kind === 'file'
       })
 
@@ -172,7 +172,7 @@ function processEntry (entry, cb) {
   function readEntries () {
     reader.readEntries(function (entries_) {
       if (entries_.length > 0) {
-        entries = entries.concat(toArray(entries_))
+        entries = entries.concat(Array.from(entries_))
         readEntries() // continue reading entries until `readEntries` returns no more
       } else {
         doneEntries()
@@ -187,8 +187,4 @@ function processEntry (entry, cb) {
       }
     }), cb)
   }
-}
-
-function toArray (list) {
-  return Array.prototype.slice.call(list || [], 0)
 }
