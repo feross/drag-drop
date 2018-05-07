@@ -50,17 +50,6 @@ function dragDrop (elem, listeners) {
   function onDragOver (e) {
     e.stopPropagation()
     e.preventDefault()
-    if (e.dataTransfer.items) {
-      // Only add "drag" class when `items` contains items that are able to be
-      // handled by the registered listeners (files vs. text)
-      var items = Array.from(e.dataTransfer.items)
-      var fileItems = items.filter(function (item) { return item.kind === 'file' })
-      var textItems = items.filter(function (item) { return item.kind === 'string' })
-
-      if (fileItems.length === 0 && !listeners.onDropText) return
-      if (textItems.length === 0 && !listeners.onDrop) return
-      if (fileItems.length === 0 && textItems.length === 0) return
-    }
 
     elem.classList.add('drag')
     clearTimeout(timeout)
