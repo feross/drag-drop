@@ -50,6 +50,11 @@ function dragDrop (elem, listeners) {
   function onDragOver (e) {
     e.stopPropagation()
     e.preventDefault()
+
+    if (listeners.onDragOver) {
+      listeners.onDragOver(e)
+    }
+
     if (e.dataTransfer.items) {
       // Only add "drag" class when `items` contains items that are able to be
       // handled by the registered listeners (files vs. text)
@@ -65,11 +70,8 @@ function dragDrop (elem, listeners) {
     elem.classList.add('drag')
     clearTimeout(timeout)
 
-    if (listeners.onDragOver) {
-      listeners.onDragOver(e)
-    }
-
     e.dataTransfer.dropEffect = 'copy'
+
     return false
   }
 
