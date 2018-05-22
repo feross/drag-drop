@@ -133,7 +133,18 @@ function dragDrop (elem, listeners) {
         // This catches permission errors with file:// in Chrome. This should never
         // throw in production code, so the user does not need to use try-catch.
         if (err) throw err
-        listeners.onDrop(flatten(results), pos, fileList)
+
+        var entries = flatten(results)
+
+        var files = entries.filter(function (item) {
+          return item.isFile
+        })
+
+        var directories = entries.filter(function (item) {
+          return item.isDirectory
+        })
+
+        listeners.onDrop(files, pos, fileList, directories)
       })
     }
 
@@ -151,6 +162,8 @@ function processEntry (entry, cb) {
   if (entry.isFile) {
     entry.file(function (file) {
       file.fullPath = entry.fullPath // preserve pathing for consumer
+      file.isFile = true
+      file.isDirectory = false
       cb(null, file)
     }, function (err) {
       cb(err)
@@ -176,6 +189,18 @@ function processEntry (entry, cb) {
       return function (cb) {
         processEntry(entry, cb)
       }
-    }), cb)
+    }), function (err, results) {
+      if (err) {
+        cb(err)
+      } else {
+        results.push({
+          fullPath: entry.fullPath,
+          name: entry.name,
+          isFile: false,
+          isDirectory: true
+        })
+        cb(null, results)
+      }
+    })
   }
 }
