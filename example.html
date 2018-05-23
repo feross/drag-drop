@@ -15,7 +15,7 @@
     <script src="dragdrop.min.js"></script>
     <script>
       window.remove = DragDrop('body', {
-        onDrop: function (files, pos, fileList) {
+        onDrop: function (files, pos, fileList, directories) {
           window.files = files
           console.log('onDrop: ' + files.length + ' files at ' + pos.x + ', ' + pos.y)
           files.forEach(function (file) {
@@ -23,6 +23,7 @@
           })
           console.log('files array', files)
           console.log('FileList object', fileList)
+          console.log('directories array', directories)
         },
         onDropText: function (text, pos) {
           window.text = text

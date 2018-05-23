@@ -45,10 +45,11 @@ npm install drag-drop
 ```js
 var dragDrop = require('drag-drop')
 
-dragDrop('#dropTarget', function (files, pos, fileList) {
+dragDrop('#dropTarget', function (files, pos, fileList, directories) {
   console.log('Here are the dropped files', files) // Array of File objects
   console.log('Dropped at coordinates', pos.x, pos.y)
   console.log('Here is the raw FileList object if you need it:', fileList)
+  console.log('Here is the list of directories:', directories)
 })
 ```
 
@@ -62,10 +63,11 @@ it obvious that this is a drop target!
 var dragDrop = require('drag-drop')
 
 // You can pass in a DOM node or a selector string!
-dragDrop('#dropTarget', function (files, pos, fileList) {
+dragDrop('#dropTarget', function (files, pos, fileList, directories) {
   console.log('Here are the dropped files', files)
   console.log('Dropped at coordinates', pos.x, pos.y)
   console.log('Here is the raw FileList object if you need it:', fileList)
+  console.log('Here is the list of directories:', directories)
 
   // `files` is an Array!
   files.forEach(function (file) {
@@ -141,10 +143,11 @@ object with all the events you want to listen for:
 var dragDrop = require('drag-drop')
 
 dragDrop('#dropTarget', {
-  onDrop: function (files, pos, fileList) {
+  onDrop: function (files, pos, fileList, directories) {
     console.log('Here are the dropped files', files)
     console.log('Dropped at coordinates', pos.x, pos.y)
     console.log('Here is the raw FileList object if you need it:', fileList)
+    console.log('Here is the list of directories:', directories)
   },
   onDragEnter: function () {},
   onDragOver: function () {},
@@ -161,10 +164,9 @@ Listen for it like this:
 var dragDrop = require('drag-drop')
 
 dragDrop('#dropTarget', {
-  onDropText: function (text, pos, fileList) {
-    console.log('Here are the dropped files', files)
+  onDropText: function (text, pos) {
+    console.log('Here is the dropped text:', text)
     console.log('Dropped at coordinates', pos.x, pos.y)
-    console.log('Here is the raw FileList object if you need it:', fileList)
   }
 })
 ```
