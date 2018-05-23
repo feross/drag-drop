@@ -12,12 +12,12 @@
     "run-parallel": "^1.0.0"
   },
   "devDependencies": {
+    "babel-minify": "^0.4.3",
     "browserify": "^16.1.0",
     "ecstatic": "^3.2.0",
     "html-inline": "^1.2.0",
     "standard": "*",
-    "tape": "^4.0.0",
-    "uglify-js": "^3.3.12"
+    "tape": "^4.0.0"
   },
   "homepage": "https://github.com/feross/drag-drop",
   "keywords": [
@@ -41,6 +41,6 @@
     "demo": "html-inline example.html | curl -sT- https://htmlb.in",
     "test": "standard && tape test/*.js",
     "example": "npm run build && ecstatic",
-    "build": "browserify -s DragDrop -r ./ | uglifyjs -c warnings=false -m > dragdrop.min.js"
+    "build": "browserify -s DragDrop -r ./ | minify > dragdrop.min.js"
   }
 }
