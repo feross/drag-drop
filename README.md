@@ -74,7 +74,7 @@ dragDrop('#dropTarget', function (files, pos, fileList, directories) {
     console.log(file.name)
     console.log(file.size)
     console.log(file.type)
-    console.log(file.lastModifiedData)
+    console.log(file.lastModifiedDate)
     console.log(file.fullPath) // not real full path due to browser security restrictions
     console.log(file.path) // in Electron, this contains the actual full path
 
