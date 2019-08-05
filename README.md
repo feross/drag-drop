@@ -12,7 +12,7 @@
 ### HTML5 drag & drop for humans
 
 In case you didn't know, the
-[HTML5 drag and drop API](https://developer.mozilla.org/en-US/docs/Using_files_from_web_applications)
+[HTML5 drag and drop API](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API)
 is a
 [total disaster](http://www.quirksmode.org/blog/archives/2009/09/the_html5_drag.html)!
 This is an attempt to make the API usable by mere mortals.
