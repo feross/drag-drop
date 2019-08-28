@@ -1,10 +1,10 @@
 module.exports = dragDrop
 
-var parallel = require('run-parallel')
+const parallel = require('run-parallel')
 
 function dragDrop (elem, listeners) {
   if (typeof elem === 'string') {
-    var selector = elem
+    const selector = elem
     elem = window.document.querySelector(elem)
     if (!elem) {
       throw new Error('"' + selector + '" does not match any HTML elements')
@@ -19,7 +19,7 @@ function dragDrop (elem, listeners) {
     listeners = { onDrop: listeners }
   }
 
-  var timeout
+  let timeout
 
   elem.addEventListener('dragenter', onDragEnter, false)
   elem.addEventListener('dragover', onDragOver, false)
@@ -57,9 +57,9 @@ function dragDrop (elem, listeners) {
     if (e.dataTransfer.items) {
       // Only add "drag" class when `items` contains items that are able to be
       // handled by the registered listeners (files vs. text)
-      var items = Array.from(e.dataTransfer.items)
-      var fileItems = items.filter(function (item) { return item.kind === 'file' })
-      var textItems = items.filter(function (item) { return item.kind === 'string' })
+      const items = Array.from(e.dataTransfer.items)
+      const fileItems = items.filter(item => { return item.kind === 'file' })
+      const textItems = items.filter(item => { return item.kind === 'string' })
 
       if (fileItems.length === 0 && !listeners.onDropText) return
       if (textItems.length === 0 && !listeners.onDrop) return
@@ -99,13 +99,13 @@ function dragDrop (elem, listeners) {
     clearTimeout(timeout)
     removeDragClass()
 
-    var pos = {
+    const pos = {
       x: e.clientX,
       y: e.clientY
     }
 
     // text drop support
-    var text = e.dataTransfer.getData('text')
+    const text = e.dataTransfer.getData('text')
     if (text && listeners.onDropText) {
       listeners.onDropText(text, pos)
     }
@@ -115,31 +115,31 @@ function dragDrop (elem, listeners) {
     // complicated to use.
     // See: https://github.com/feross/drag-drop/issues/39
     if (listeners.onDrop && e.dataTransfer.items) {
-      var fileList = e.dataTransfer.files
+      const fileList = e.dataTransfer.files
 
       // Handle directories in Chrome using the proprietary FileSystem API
-      var items = Array.from(e.dataTransfer.items).filter(function (item) {
+      const items = Array.from(e.dataTransfer.items).filter(item => {
         return item.kind === 'file'
       })
 
       if (items.length === 0) return
 
-      parallel(items.map(function (item) {
-        return function (cb) {
+      parallel(items.map(item => {
+        return cb => {
           processEntry(item.webkitGetAsEntry(), cb)
         }
-      }), function (err, results) {
+      }), (err, results) => {
         // This catches permission errors with file:// in Chrome. This should never
         // throw in production code, so the user does not need to use try-catch.
         if (err) throw err
 
-        var entries = results.flat()
+        const entries = results.flat()
 
-        var files = entries.filter(function (item) {
+        const files = entries.filter(item => {
           return item.isFile
         })
 
-        var directories = entries.filter(function (item) {
+        const directories = entries.filter(item => {
           return item.isDirectory
         })
 
@@ -156,24 +156,24 @@ function dragDrop (elem, listeners) {
 }
 
 function processEntry (entry, cb) {
-  var entries = []
+  let entries = []
 
   if (entry.isFile) {
-    entry.file(function (file) {
+    entry.file(file => {
       file.fullPath = entry.fullPath // preserve pathing for consumer
       file.isFile = true
       file.isDirectory = false
       cb(null, file)
-    }, function (err) {
+    }, err => {
       cb(err)
     })
   } else if (entry.isDirectory) {
-    var reader = entry.createReader()
-    readEntries()
+    const reader = entry.createReader()
+    readEntries(reader)
   }
 
-  function readEntries () {
-    reader.readEntries(function (entries_) {
+  function readEntries (reader) {
+    reader.readEntries(entries_ => {
       if (entries_.length > 0) {
         entries = entries.concat(Array.from(entries_))
         readEntries() // continue reading entries until `readEntries` returns no more
@@ -184,11 +184,11 @@ function processEntry (entry, cb) {
   }
 
   function doneEntries () {
-    parallel(entries.map(function (entry) {
-      return function (cb) {
+    parallel(entries.map(entry => {
+      return cb => {
         processEntry(entry, cb)
       }
-    }), function (err, results) {
+    }), (err, results) => {
       if (err) {
         cb(err)
       } else {
