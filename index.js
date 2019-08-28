@@ -1,6 +1,5 @@
 module.exports = dragDrop
 
-var flat = require('array.prototype.flat')
 var parallel = require('run-parallel')
 
 function dragDrop (elem, listeners) {
@@ -134,7 +133,7 @@ function dragDrop (elem, listeners) {
         // throw in production code, so the user does not need to use try-catch.
         if (err) throw err
 
-        var entries = flat(results)
+        var entries = results.flat()
 
         var files = entries.filter(function (item) {
           return item.isFile
