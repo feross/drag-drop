@@ -115,7 +115,7 @@ dragDrop('#dropTarget', function (files) {
     console.log(file.type)
     console.log(file.lastModifiedDate)
   })
-}
+})
 ```
 
 ### remove listeners
