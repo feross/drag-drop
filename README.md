@@ -43,9 +43,9 @@ npm install drag-drop
 ### usage
 
 ```js
-var dragDrop = require('drag-drop')
+const dragDrop = require('drag-drop')
 
-dragDrop('#dropTarget', function (files, pos, fileList, directories) {
+dragDrop('#dropTarget', (files, pos, fileList, directories) => {
   console.log('Here are the dropped files', files) // Array of File objects
   console.log('Dropped at coordinates', pos.x, pos.y)
   console.log('Here is the raw FileList object if you need it:', fileList)
@@ -60,17 +60,17 @@ it obvious that this is a drop target!
 ### complete example
 
 ```js
-var dragDrop = require('drag-drop')
+const dragDrop = require('drag-drop')
 
 // You can pass in a DOM node or a selector string!
-dragDrop('#dropTarget', function (files, pos, fileList, directories) {
+dragDrop('#dropTarget', (files, pos, fileList, directories) => {
   console.log('Here are the dropped files', files)
   console.log('Dropped at coordinates', pos.x, pos.y)
   console.log('Here is the raw FileList object if you need it:', fileList)
   console.log('Here is the list of directories:', directories)
 
   // `files` is an Array!
-  files.forEach(function (file) {
+  files.forEach(file => {
     console.log(file.name)
     console.log(file.size)
     console.log(file.type)
@@ -79,15 +79,15 @@ dragDrop('#dropTarget', function (files, pos, fileList, directories) {
     console.log(file.path) // in Electron, this contains the actual full path
 
     // convert the file to a Buffer that we can use!
-    var reader = new FileReader()
-    reader.addEventListener('load', function (e) {
+    const reader = new FileReader()
+    reader.addEventListener('load', e => {
       // e.target.result is an ArrayBuffer
-      var arr = new Uint8Array(e.target.result)
-      var buffer = new Buffer(arr)
+      const arr = new Uint8Array(e.target.result)
+      const buffer = new Buffer(arr)
 
       // do something with the buffer!
     })
-    reader.addEventListener('error', function (err) {
+    reader.addEventListener('error', err => {
       console.error('FileReader error' + err)
     })
     reader.readAsArrayBuffer(file)
@@ -100,10 +100,10 @@ dragDrop('#dropTarget', function (files, pos, fileList, directories) {
 If you prefer to access file data as Buffers, then just require drag-drop like this:
 
 ```js
-var dragDrop = require('drag-drop/buffer')
+const dragDrop = require('drag-drop/buffer')
 
-dragDrop('#dropTarget', function (files) {
-  files.forEach(function (file) {
+dragDrop('#dropTarget', files => {
+  files.forEach(file => {
     // file is actually a buffer!
     console.log(file.readUInt32LE(0))
     console.log(file.toJSON())
@@ -115,7 +115,7 @@ dragDrop('#dropTarget', function (files) {
     console.log(file.type)
     console.log(file.lastModifiedDate)
   })
-}
+})
 ```
 
 ### remove listeners
@@ -124,9 +124,9 @@ To stop listening for drag & drop events and remove the event listeners, just us
 `remove` function returned by the `dragDrop` function.
 
 ```js
-var dragDrop = require('drag-drop')
+const dragDrop = require('drag-drop')
 
-var remove = dragDrop('#dropTarget', function (files) {
+const remove = dragDrop('#dropTarget', files => {
   // ...
 })
 
@@ -140,18 +140,18 @@ Instead of passing just an `ondrop` function as the second argument, instead pas
 object with all the events you want to listen for:
 
 ```js
-var dragDrop = require('drag-drop')
+const dragDrop = require('drag-drop')
 
 dragDrop('#dropTarget', {
-  onDrop: function (files, pos, fileList, directories) {
+  onDrop: (files, pos, fileList, directories) => {
     console.log('Here are the dropped files', files)
     console.log('Dropped at coordinates', pos.x, pos.y)
     console.log('Here is the raw FileList object if you need it:', fileList)
     console.log('Here is the list of directories:', directories)
   },
-  onDragEnter: function () {},
-  onDragOver: function () {},
-  onDragLeave: function () {}
+  onDragEnter: () => {},
+  onDragOver: () => {},
+  onDragLeave: () => {}
 })
 ```
 
@@ -161,10 +161,10 @@ If the user highlights text and drags it, we capture that as a separate event.
 Listen for it like this:
 
 ```js
-var dragDrop = require('drag-drop')
+const dragDrop = require('drag-drop')
 
 dragDrop('#dropTarget', {
-  onDropText: function (text, pos) {
+  onDropText: (text, pos) => {
     console.log('Here is the dropped text:', text)
     console.log('Dropped at coordinates', pos.x, pos.y)
   }
