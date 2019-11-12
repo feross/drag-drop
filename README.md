@@ -35,7 +35,7 @@ See [https://instant.io](https://instant.io).
 npm install drag-drop
 ```
 
-This module works in the browser with [browserify](https://browserify.org). If you do not use a bundler, you can use the [standalone script](https://bundle.run/drag-drop) directly in a `<script>` tag.
+This package works in the browser with [browserify](https://browserify.org). If you do not use a bundler, you can use the [standalone script](https://bundle.run/drag-drop) directly in a `<script>` tag.
 
 ### usage
 
