@@ -36,8 +36,8 @@
     "url": "git://github.com/feross/drag-drop.git"
   },
   "scripts": {
-    "example": "browserify -s DragDrop -r ./ > example/dragdrop.min.js && ecstatic example --port 4000",
-    "size": "browserify -s DragDrop -r ./ | minify | gzip | wc -c",
+    "example": "browserify -s DragDrop -r . > example/dragdrop.js && ecstatic example --port 4000",
+    "size": "browserify -s DragDrop -r . | minify | gzip | wc -c",
     "test": "standard && tape test/*.js"
   }
 }
