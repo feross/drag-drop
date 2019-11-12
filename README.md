@@ -17,11 +17,6 @@ is a
 [total disaster](http://www.quirksmode.org/blog/archives/2009/09/the_html5_drag.html)!
 This is an attempt to make the API usable by mere mortals.
 
-This module works in the browser with [browserify](http://browserify.org/).
-
-**Note:** If you do not use browserify, use the included standalone file
-[`dragdrop.min.js`](https://rawgit.com/feross/drag-drop/master/dragdrop.min.js). This exports a `DragDrop` function on `window`.
-
 ### live demo
 
 See [https://instant.io](https://instant.io).
@@ -39,6 +34,8 @@ See [https://instant.io](https://instant.io).
 ```
 npm install drag-drop
 ```
+
+This module works in the browser with [browserify](https://browserify.org). If you do not use a bundler, you can use the [standalone script](https://bundle.run/drag-drop) directly in a `<script>` tag.
 
 ### usage
 

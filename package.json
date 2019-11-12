@@ -11,12 +11,11 @@
     "run-parallel": "^1.0.0"
   },
   "devDependencies": {
+    "babel-minify": "^0.5.1",
     "browserify": "^16.1.0",
     "ecstatic": "^4.0.0",
-    "html-inline": "^1.2.0",
     "standard": "*",
-    "tape": "^4.0.0",
-    "tinyify": "^2.5.2"
+    "tape": "^4.0.0"
   },
   "homepage": "https://github.com/feross/drag-drop",
   "keywords": [
@@ -37,10 +36,8 @@
     "url": "git://github.com/feross/drag-drop.git"
   },
   "scripts": {
-    "build": "browserify --plugin tinyify -s DragDrop -r ./ > dragdrop.min.js",
-    "demo": "html-inline example.html | curl -sT- https://htmlb.in",
-    "example": "npm run build && ecstatic",
-    "size": "npm run build && cat dragdrop.min.js | gzip | wc -c",
+    "example": "browserify -s DragDrop -r ./ > example/dragdrop.min.js && ecstatic example --port 4000",
+    "size": "browserify -s DragDrop -r ./ | minify | gzip | wc -c",
     "test": "standard && tape test/*.js"
   }
 }
