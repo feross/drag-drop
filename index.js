@@ -176,7 +176,7 @@ function processEntry (entry, cb) {
     reader.readEntries(entries_ => {
       if (entries_.length > 0) {
         entries = entries.concat(Array.from(entries_))
-        readEntries() // continue reading entries until `readEntries` returns no more
+        readEntries(reader) // continue reading entries until `readEntries` returns no more
       } else {
         doneEntries()
       }
