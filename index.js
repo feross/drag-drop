@@ -133,7 +133,7 @@ function dragDrop (elem, listeners) {
         // throw in production code, so the user does not need to use try-catch.
         if (err) throw err
 
-        const entries = results.flat()
+        const entries = results.flat(Infinity)
 
         const files = entries.filter(item => {
           return item.isFile
