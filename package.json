@@ -1,7 +1,7 @@
 {
   "name": "drag-drop",
   "description": "HTML5 drag & drop for humans",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "author": "Feross Aboukhadijeh <feross@feross.org> (http://feross.org/)",
   "bugs": {
     "url": "https://github.com/feross/drag-drop/issues"
