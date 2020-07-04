@@ -1,3 +1,4 @@
+/*! drag-drop. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 module.exports = dragDrop
 
 const parallel = require('run-parallel')

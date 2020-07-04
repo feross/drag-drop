@@ -2,7 +2,11 @@
   "name": "drag-drop",
   "description": "HTML5 drag & drop for humans",
   "version": "6.0.1",
-  "author": "Feross Aboukhadijeh <feross@feross.org> (http://feross.org/)",
+  "author": {
+    "name": "Feross Aboukhadijeh",
+    "email": "feross@feross.org",
+    "url": "https://feross.org"
+  },
   "bugs": {
     "url": "https://github.com/feross/drag-drop/issues"
   },
@@ -39,5 +43,19 @@
     "example": "browserify -s DragDrop -r . > example/drag-drop.js && ecstatic example --port 4000",
     "size": "browserify -s DragDrop -r . | minify | gzip | wc -c",
     "test": "standard && tape test/*.js"
-  }
+  },
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/feross"
+    },
+    {
+      "type": "patreon",
+      "url": "https://www.patreon.com/feross"
+    },
+    {
+      "type": "consulting",
+      "url": "https://feross.org/support"
+    }
+  ]
 }
