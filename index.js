@@ -54,13 +54,23 @@ function dragDrop (elem, listeners) {
     if (listeners.onDragOver) {
       listeners.onDragOver(e)
     }
-
-    if (e.dataTransfer.items) {
+    if (e.dataTransfer.items || e.dataTransfer.types) {
       // Only add "drag" class when `items` contains items that are able to be
       // handled by the registered listeners (files vs. text)
       const items = Array.from(e.dataTransfer.items)
-      const fileItems = items.filter(item => { return item.kind === 'file' })
-      const textItems = items.filter(item => { return item.kind === 'string' })
+      const types = Array.from(e.dataTransfer.types)
+
+      let fileItems
+      let textItems
+      if (items.length) {
+        fileItems = items.filter(item => { return item.kind === 'file' })
+        textItems = items.filter(item => { return item.kind === 'string' })
+      } else if (types.length) {
+        // e.dataTransfer.items is empty during 'dragover' in Safari, so use
+        // e.dataTransfer.types as a fallback
+        fileItems = types.filter(item => item === 'Files')
+        textItems = types.filter(item => item.startsWith('text/'))
+      }
 
       if (fileItems.length === 0 && !listeners.onDropText) return
       if (textItems.length === 0 && !listeners.onDrop) return
