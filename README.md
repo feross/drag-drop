@@ -1,7 +1,7 @@
-# drag-drop [![travis][travis-image]][travis-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url] [![javascript style guide][standard-image]][standard-url]
+# drag-drop [![ci][ci-image]][ci-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url] [![javascript style guide][standard-image]][standard-url]
 
-[travis-image]: https://img.shields.io/travis/feross/drag-drop/master.svg
-[travis-url]: https://travis-ci.org/feross/drag-drop
+[ci-image]: https://img.shields.io/github/workflow/status/feross/drag-drop/ci/master
+[ci-url]: https://github.com/feross/drag-drop/actions
 [npm-image]: https://img.shields.io/npm/v/drag-drop.svg
 [npm-url]: https://npmjs.org/package/drag-drop
 [downloads-image]: https://img.shields.io/npm/dm/drag-drop.svg
