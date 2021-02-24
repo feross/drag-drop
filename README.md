@@ -25,7 +25,7 @@ See [https://instant.io](https://instant.io).
 
 - simple API
 - supports files and directories
-- supports modern browsers (Chrome, Firefox, Safari, Edge)
+- excellent browser support (Chrome, Firefox, Safari, Edge)
 - adds a `drag` class to the drop target on hover, for easy styling!
 - optionally, get the file(s) as a Buffer (see [buffer](https://github.com/feross/buffer))
 
@@ -115,20 +115,20 @@ dragDrop('#dropTarget', files => {
 })
 ```
 
-### remove listeners
+### detect drag-and-dropped text
 
-To stop listening for drag & drop events and remove the event listeners, just use the
-`remove` function returned by the `dragDrop` function.
+If the user highlights text and drags it, we capture that as a separate event.
+Listen for it like this:
 
 ```js
 const dragDrop = require('drag-drop')
 
-const remove = dragDrop('#dropTarget', files => {
-  // ...
+dragDrop('#dropTarget', {
+  onDropText: (text, pos) => {
+    console.log('Here is the dropped text:', text)
+    console.log('Dropped at coordinates', pos.x, pos.y)
+  }
 })
-
-// ... at some point in the future, stop listening for drag & drop events
-remove()
 ```
 
 ### detect `dragenter`, `dragover` and `dragleave` events
@@ -146,26 +146,40 @@ dragDrop('#dropTarget', {
     console.log('Here is the raw FileList object if you need it:', fileList)
     console.log('Here is the list of directories:', directories)
   },
-  onDragEnter: () => {},
-  onDragOver: () => {},
-  onDragLeave: () => {}
+  onDropText: (text, pos) => {
+    console.log('Here is the dropped text:', text)
+    console.log('Dropped at coordinates', pos.x, pos.y)
+  },
+  onDragEnter: (event) => {},
+  onDragOver: (event) => {},
+  onDragLeave: (event) => {}
 })
 ```
 
-### detect drag-and-dropped text
+You can rely on the `onDragEnter` and `onDragLeave` events to fire only for the
+drop target you specified. Events which bubble up from child nodes are ignored
+so that you can expect a single `onDragEnter` and then a single `onDragLeave`
+event to fire.
 
-If the user highlights text and drags it, we capture that as a separate event.
-Listen for it like this:
+Furthermore, neither `onDragEnter`, `onDragLeave`, nor `onDragOver` will fire
+for drags which cannot be handled by the registered drop listeners. For example,
+if you only listen for `onDrop` (files) but not `onDropText` (text) and the user
+is dragging text over the drop target, then none of the listed events will fire.
+
+### remove listeners
+
+To stop listening for drag & drop events and remove the event listeners, just use the
+`cleanup` function returned by the `dragDrop` function.
 
 ```js
 const dragDrop = require('drag-drop')
 
-dragDrop('#dropTarget', {
-  onDropText: (text, pos) => {
-    console.log('Here is the dropped text:', text)
-    console.log('Dropped at coordinates', pos.x, pos.y)
-  }
+const cleanup = dragDrop('#dropTarget', files => {
+  // ...
 })
+
+// ... at some point in the future, stop listening for drag & drop events
+cleanup()
 ```
 
 ### a note about `file://` urls

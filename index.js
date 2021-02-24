@@ -20,15 +20,16 @@ function dragDrop (elem, listeners) {
     listeners = { onDrop: listeners }
   }
 
-  let timeout
-
   elem.addEventListener('dragenter', onDragEnter, false)
   elem.addEventListener('dragover', onDragOver, false)
   elem.addEventListener('dragleave', onDragLeave, false)
   elem.addEventListener('drop', onDrop, false)
 
+  let isEntered = false
+  let numIgnoredEnters = 0
+
   // Function to remove drag-drop listeners
-  return function remove () {
+  return function cleanup () {
     removeDragClass()
     elem.removeEventListener('dragenter', onDragEnter, false)
     elem.removeEventListener('dragover', onDragOver, false)
@@ -36,29 +37,12 @@ function dragDrop (elem, listeners) {
     elem.removeEventListener('drop', onDrop, false)
   }
 
-  function onDragEnter (e) {
-    if (listeners.onDragEnter) {
-      listeners.onDragEnter(e)
-    }
-
-    // Prevent event
-    e.stopPropagation()
-    e.preventDefault()
-    return false
-  }
-
-  function onDragOver (e) {
-    e.stopPropagation()
-    e.preventDefault()
-
-    if (listeners.onDragOver) {
-      listeners.onDragOver(e)
-    }
-    if (e.dataTransfer.items || e.dataTransfer.types) {
+  function isEventHandleable (event) {
+    if (event.dataTransfer.items || event.dataTransfer.types) {
       // Only add "drag" class when `items` contains items that are able to be
       // handled by the registered listeners (files vs. text)
-      const items = Array.from(e.dataTransfer.items)
-      const types = Array.from(e.dataTransfer.types)
+      const items = Array.from(event.dataTransfer.items)
+      const types = Array.from(event.dataTransfer.types)
 
       let fileItems
       let textItems
@@ -66,57 +50,98 @@ function dragDrop (elem, listeners) {
         fileItems = items.filter(item => { return item.kind === 'file' })
         textItems = items.filter(item => { return item.kind === 'string' })
       } else if (types.length) {
-        // e.dataTransfer.items is empty during 'dragover' in Safari, so use
-        // e.dataTransfer.types as a fallback
+        // event.dataTransfer.items is empty during 'dragover' in Safari, so use
+        // event.dataTransfer.types as a fallback
         fileItems = types.filter(item => item === 'Files')
         textItems = types.filter(item => item.startsWith('text/'))
       }
 
-      if (fileItems.length === 0 && !listeners.onDropText) return
-      if (textItems.length === 0 && !listeners.onDrop) return
-      if (fileItems.length === 0 && textItems.length === 0) return
+      if (fileItems.length === 0 && !listeners.onDropText) return false
+      if (textItems.length === 0 && !listeners.onDrop) return false
+      if (fileItems.length === 0 && textItems.length === 0) return false
+    }
+    return true
+  }
+
+  function onDragEnter (event) {
+    event.stopPropagation()
+    event.preventDefault()
+
+    if (!isEventHandleable(event)) return
+
+    if (isEntered) {
+      numIgnoredEnters += 1
+      return false // early return
     }
 
-    elem.classList.add('drag')
-    clearTimeout(timeout)
+    isEntered = true
 
-    e.dataTransfer.dropEffect = 'copy'
+    if (listeners.onDragEnter) {
+      listeners.onDragEnter(event)
+    }
+
+    addDragClass()
 
     return false
   }
 
-  function onDragLeave (e) {
-    e.stopPropagation()
-    e.preventDefault()
+  function onDragOver (event) {
+    event.stopPropagation()
+    event.preventDefault()
 
-    if (listeners.onDragLeave) {
-      listeners.onDragLeave(e)
+    if (!isEventHandleable(event)) return
+
+    if (listeners.onDragOver) {
+      listeners.onDragOver(event)
     }
 
-    clearTimeout(timeout)
-    timeout = setTimeout(removeDragClass, 50)
+    event.dataTransfer.dropEffect = 'copy'
 
     return false
   }
 
-  function onDrop (e) {
-    e.stopPropagation()
-    e.preventDefault()
+  function onDragLeave (event) {
+    event.stopPropagation()
+    event.preventDefault()
 
-    if (listeners.onDragLeave) {
-      listeners.onDragLeave(e)
+    if (!isEventHandleable(event)) return
+
+    if (numIgnoredEnters > 0) {
+      numIgnoredEnters -= 1
+      return false
     }
 
-    clearTimeout(timeout)
+    isEntered = false
+
+    if (listeners.onDragLeave) {
+      listeners.onDragLeave(event)
+    }
+
     removeDragClass()
 
+    return false
+  }
+
+  function onDrop (event) {
+    event.stopPropagation()
+    event.preventDefault()
+
+    if (listeners.onDragLeave) {
+      listeners.onDragLeave(event)
+    }
+
+    removeDragClass()
+
+    isEntered = false
+    numIgnoredEnters = 0
+
     const pos = {
-      x: e.clientX,
-      y: e.clientY
+      x: event.clientX,
+      y: event.clientY
     }
 
     // text drop support
-    const text = e.dataTransfer.getData('text')
+    const text = event.dataTransfer.getData('text')
     if (text && listeners.onDropText) {
       listeners.onDropText(text, pos)
     }
@@ -125,11 +150,11 @@ function dragDrop (elem, listeners) {
     // use it instead of `dataTransfer.files`, even though it's much more
     // complicated to use.
     // See: https://github.com/feross/drag-drop/issues/39
-    if (listeners.onDrop && e.dataTransfer.items) {
-      const fileList = e.dataTransfer.files
+    if (listeners.onDrop && event.dataTransfer.items) {
+      const fileList = event.dataTransfer.files
 
       // Handle directories in Chrome using the proprietary FileSystem API
-      const items = Array.from(e.dataTransfer.items).filter(item => {
+      const items = Array.from(event.dataTransfer.items).filter(item => {
         return item.kind === 'file'
       })
 
@@ -161,6 +186,10 @@ function dragDrop (elem, listeners) {
     return false
   }
 
+  function addDragClass () {
+    elem.classList.add('drag')
+  }
+
   function removeDragClass () {
     elem.classList.remove('drag')
   }
@@ -171,7 +200,7 @@ function processEntry (entry, cb) {
 
   if (entry.isFile) {
     entry.file(file => {
-      file.fullPath = entry.fullPath // preserve pathing for consumer
+      file.fullPath = entry.fullPath // preserve path for consumer
       file.isFile = true
       file.isDirectory = false
       cb(null, file)
@@ -184,9 +213,9 @@ function processEntry (entry, cb) {
   }
 
   function readEntries (reader) {
-    reader.readEntries(entries_ => {
-      if (entries_.length > 0) {
-        entries = entries.concat(Array.from(entries_))
+    reader.readEntries(currentEntries => {
+      if (currentEntries.length > 0) {
+        entries = entries.concat(Array.from(currentEntries))
         readEntries(reader) // continue reading entries until `readEntries` returns no more
       } else {
         doneEntries()
