@@ -38,7 +38,7 @@ function dragDrop (elem, listeners) {
   }
 
   function isEventHandleable (event) {
-    if (event.dataTransfer.items || event.dataTransfer.types) {
+    if (event.dataTransfer.items.length || event.dataTransfer.types.length) {
       // Only add "drag" class when `items` contains items that are able to be
       // handled by the registered listeners (files vs. text)
       const items = Array.from(event.dataTransfer.items)
@@ -59,6 +59,8 @@ function dragDrop (elem, listeners) {
       if (fileItems.length === 0 && !listeners.onDropText) return false
       if (textItems.length === 0 && !listeners.onDrop) return false
       if (fileItems.length === 0 && textItems.length === 0) return false
+    } else {
+      return false
     }
     return true
   }
