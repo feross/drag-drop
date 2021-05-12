@@ -19,7 +19,7 @@
     "browserify": "^17.0.0",
     "ecstatic": "^4.1.4",
     "standard": "*",
-    "tape": "^5.2.0"
+    "tape": "^5.2.2"
   },
   "homepage": "https://github.com/feross/drag-drop",
   "keywords": [
