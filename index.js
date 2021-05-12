@@ -54,6 +54,8 @@ function dragDrop (elem, listeners) {
         // event.dataTransfer.types as a fallback
         fileItems = types.filter(item => item === 'Files')
         textItems = types.filter(item => item.startsWith('text/'))
+      } else {
+        return false
       }
 
       if (fileItems.length === 0 && !listeners.onDropText) return false
