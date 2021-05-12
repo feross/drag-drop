@@ -61,8 +61,10 @@ function dragDrop (elem, listeners) {
       if (fileItems.length === 0 && !listeners.onDropText) return false
       if (textItems.length === 0 && !listeners.onDrop) return false
       if (fileItems.length === 0 && textItems.length === 0) return false
+
+      return true
     }
-    return true
+    return false
   }
 
   function onDragEnter (event) {
