@@ -190,7 +190,7 @@ browser's native `'paste'` event.
 
 ```js
 document.addEventListener('paste', event => {
-  dragDrop.processItems(event.clipboardData.items, files => {
+  dragDrop.processItems(event.clipboardData.items, (err, files) => {
     // ...
   })
 })
