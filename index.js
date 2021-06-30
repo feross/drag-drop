@@ -156,7 +156,15 @@ function dragDrop (elem, listeners) {
     // complicated to use.
     // See: https://github.com/feross/drag-drop/issues/39
     if (listeners.onDrop && event.dataTransfer.items) {
-      processItems(event.dataTransfer.items, (files, directories) => {
+      processItems(event.dataTransfer.items, (err, files, directories) => {
+        if (err) {
+          // TODO: A future version of this library might expose this somehow
+          console.error(err)
+          return
+        }
+
+        if (files.length === 0) return
+
         const fileList = event.dataTransfer.files
 
         // TODO: This callback has too many arguments, and the order is too
@@ -183,16 +191,20 @@ function processItems (items, cb) {
     return item.kind === 'file'
   })
 
-  if (items.length === 0) return
+  if (items.length === 0) {
+    cb(null, [], [])
+  }
 
   parallel(items.map(item => {
     return cb => {
       processEntry(item.webkitGetAsEntry(), cb)
     }
   }), (err, results) => {
-    // This catches permission errors with file:// in Chrome. This should never
-    // throw in production code, so the user does not need to use try-catch.
-    if (err) throw err
+    // This catches permission errors with file:// in Chrome
+    if (err) {
+      cb(err)
+      return
+    }
 
     const entries = results.flat(Infinity)
 
@@ -204,7 +216,7 @@ function processItems (items, cb) {
       return item.isDirectory
     })
 
-    cb(files, directories)
+    cb(null, files, directories)
   })
 }
 
