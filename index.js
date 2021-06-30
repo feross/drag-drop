@@ -1,5 +1,6 @@
 /*! drag-drop. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 module.exports = dragDrop
+module.exports.processItems = processItems
 
 const parallel = require('run-parallel')
 
@@ -155,34 +156,11 @@ function dragDrop (elem, listeners) {
     // complicated to use.
     // See: https://github.com/feross/drag-drop/issues/39
     if (listeners.onDrop && event.dataTransfer.items) {
-      const fileList = event.dataTransfer.files
+      processItems(event.dataTransfer.items, (files, directories) => {
+        const fileList = event.dataTransfer.files
 
-      // Handle directories in Chrome using the proprietary FileSystem API
-      const items = Array.from(event.dataTransfer.items).filter(item => {
-        return item.kind === 'file'
-      })
-
-      if (items.length === 0) return
-
-      parallel(items.map(item => {
-        return cb => {
-          processEntry(item.webkitGetAsEntry(), cb)
-        }
-      }), (err, results) => {
-        // This catches permission errors with file:// in Chrome. This should never
-        // throw in production code, so the user does not need to use try-catch.
-        if (err) throw err
-
-        const entries = results.flat(Infinity)
-
-        const files = entries.filter(item => {
-          return item.isFile
-        })
-
-        const directories = entries.filter(item => {
-          return item.isDirectory
-        })
-
+        // TODO: This callback has too many arguments, and the order is too
+        // arbitrary. In next major version, it should be cleaned up.
         listeners.onDrop(files, pos, fileList, directories)
       })
     }
@@ -197,6 +175,37 @@ function dragDrop (elem, listeners) {
   function removeDragClass () {
     elem.classList.remove('drag')
   }
+}
+
+function processItems (items, cb) {
+  // Handle directories in Chrome using the proprietary FileSystem API
+  items = Array.from(items).filter(item => {
+    return item.kind === 'file'
+  })
+
+  if (items.length === 0) return
+
+  parallel(items.map(item => {
+    return cb => {
+      processEntry(item.webkitGetAsEntry(), cb)
+    }
+  }), (err, results) => {
+    // This catches permission errors with file:// in Chrome. This should never
+    // throw in production code, so the user does not need to use try-catch.
+    if (err) throw err
+
+    const entries = results.flat(Infinity)
+
+    const files = entries.filter(item => {
+      return item.isFile
+    })
+
+    const directories = entries.filter(item => {
+      return item.isDirectory
+    })
+
+    cb(files, directories)
+  })
 }
 
 function processEntry (entry, cb) {

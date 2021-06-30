@@ -182,6 +182,20 @@ const cleanup = dragDrop('#dropTarget', files => {
 cleanup()
 ```
 
+### support pasting files from the clipboard
+
+To support users pasting files from their clipboard, use the provided
+`processItems()` function to process the `DataTransferItemList` from the
+browser's native `'paste'` event.
+
+```js
+document.addEventListener('paste', event => {
+  dragDrop.processItems(event.clipboardData.items, files => {
+    // ...
+  })
+})
+```
+
 ### a note about `file://` urls
 
 Don't run your app from `file://`. For security reasons, browsers do not allow you to
