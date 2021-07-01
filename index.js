@@ -146,7 +146,7 @@ function dragDrop (elem, listeners) {
     }
 
     // text drop support
-    const text = event.dataTransfer.getData('text')
+    const text = event.dataTransfer.getData('text') || event.dataTransfer.getData('text/uri-list')
     if (text && listeners.onDropText) {
       listeners.onDropText(text, pos)
     }
